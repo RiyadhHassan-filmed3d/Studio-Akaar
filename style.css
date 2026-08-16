@@ -1,0 +1,71 @@
+/* =========================================================
+   STUDIO AKAAR — CUSTOM OVERRIDES
+   Add this file after your existing styles so these rules
+   can safely control the header/logo.
+   ========================================================= */
+
+/* ---------- Header ---------- */
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+/* ---------- Studio Akaar logo ---------- */
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.brand img {
+  width: 150px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* ---------- Navigation polish ---------- */
+.navlinks {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.navlinks a {
+  text-decoration: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.navlinks a:hover {
+  opacity: 0.65;
+  transform: translateY(-1px);
+}
+
+/* ---------- Mobile menu ---------- */
+.menubtn {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ---------- Responsive logo ---------- */
+@media (max-width: 768px) {
+  .brand img {
+    width: 125px;
+  }
+
+  .navlinks {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand img {
+    width: 110px;
+  }
+}
