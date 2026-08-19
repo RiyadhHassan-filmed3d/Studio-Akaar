@@ -43,6 +43,11 @@
 .bookFloat span{font-size:13px}
 @media(max-width:800px){.bookFloat{left:16px;bottom:16px;padding:12px 18px;font-size:10px}}
 
+/* Touch devices: reveal color as each image scrolls into view, since there's no hover on mobile */
+@media(hover:none){
+  .heroImage.seen img,.introImage.seen img,.founderImage.seen img,.projectImg.seen img{filter:grayscale(0)}
+}
+
 @media(max-width:800px){.nav{height:66px}.brand img{height:32px}.navlinks{display:none}.navlinks.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#111;padding:30px 8vw;flex-direction:column;gap:22px}.menubtn{display:block}.menubtn span{display:block;width:24px;height:1px;background:#fff;margin:6px}.hero{min-height:650px}.heroText{left:7vw;bottom:13vh}.heroMeta{left:7vw;right:7vw}.heroMeta span:nth-child(2){display:none}.intro,.services{display:block;padding:100px 7vw}.intro .sectionNo,.services .sectionNo{margin-bottom:70px}.introImage{height:430px;margin-top:60px}.work{padding:70px 7vw 100px}.workHead{display:block;padding:0 0 45px}.workNote{margin-top:25px}.filters{padding:0 0 35px}.grid{display:block}.project,.project.p1{margin:0 0 55px}.projectImg,.project:nth-child(3n) .projectImg,.project:nth-child(4n) .projectImg{aspect-ratio:4/5}.statement{padding:100px 7vw;min-height:500px}.statement p{font-size:38px}.serviceList{margin-top:60px}.founder{display:block}.founderImage{height:430px}.founderCopy{padding:80px 7vw}.footerTop{display:block;padding:100px 7vw}.bigMail{display:inline-block;margin-top:40px;font-size:10px}.bigMail span{margin-left:20px}.footerBottom{padding:45px 7vw;grid-template-columns:1fr 1fr}.copyright{text-align:left;grid-column:1/-1;margin-top:20px}.footerTop h2{font-size:55px}}
 </style></head><body>
 <header class="nav"><a href="#top" class="brand" aria-label="Studio Akaar"><img src="images/logo-light.png" alt="Studio Akaar Logo"></a><nav class="navlinks" id="navlinks"><a href="#work">Work</a><a href="#studio">Studio</a><a href="#services">Services</a><a href="#contact">Contact</a></nav><button class="menubtn" id="menubtn"><span></span><span></span></button></header>
@@ -120,6 +125,7 @@ function render(){
       <div class="projectImg"><img src="images/${p[0]}" alt="${p[2]}" loading="lazy"><span class="projectNum">${p[3]}</span><span class="projectArrow">↗</span></div>
       <div class="projectInfo"><span>${p[1]}</span><strong>${p[2]}</strong></div>
     </div>`).join('');
+  observeProjectImages();
 }
 
 let modalList=[]; // the set of projects currently browsable in the popup
@@ -177,5 +183,21 @@ document.getElementById('serviceList').innerHTML=services.map((s,i)=>`<div><span
 render();
 document.getElementById('menubtn').onclick=()=>document.getElementById('navlinks').classList.toggle('open');
 document.querySelectorAll('.navlinks a').forEach(a=>a.onclick=()=>document.getElementById('navlinks').classList.remove('open'));
+
+// On touch devices there's no hover, so reveal color as images scroll into view instead
+let scrollRevealIO=null;
+function setupScrollReveal(){
+  if(!window.matchMedia('(hover:none)').matches)return; // desktop keeps mouse-hover behavior only
+  scrollRevealIO=new IntersectionObserver(entries=>{
+    entries.forEach(e=>e.target.classList.toggle('seen', e.isIntersecting));
+  },{threshold:0.35});
+  document.querySelectorAll('.heroImage,.introImage,.founderImage').forEach(t=>scrollRevealIO.observe(t));
+  observeProjectImages();
+}
+function observeProjectImages(){
+  if(!scrollRevealIO)return;
+  document.querySelectorAll('.projectImg').forEach(t=>scrollRevealIO.observe(t));
+}
+setupScrollReveal();
 </script>
 </body></html>
