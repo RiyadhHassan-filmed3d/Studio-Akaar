@@ -1,18 +1,18 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Studio Akaar — architectural solutions shaped by functional clarity, systematic thinking and a respect for how people experience space.">
-<title>Studio Akaar — Architecture, Interior & Landscape</title>
+<title>Studio Akaar — Architecture, Interior &amp; Landscape</title>
 
 <!-- Favicon (uses your existing logo) -->
 <link rel="icon" type="image/png" href="images/logo.png">
 
 <!-- Social share previews (Facebook / LinkedIn / WhatsApp) -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Studio Akaar — Architecture, Interior & Landscape">
+<meta property="og:title" content="Studio Akaar — Architecture, Interior &amp; Landscape">
 <meta property="og:description" content="Architectural solutions shaped by functional clarity, systematic thinking and a respect for how people experience space.">
 <meta property="og:image" content="https://studio-akaar-website.vercel.app/images/img-002.jpg">
 <meta property="og:url" content="https://studio-akaar-website.vercel.app/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Studio Akaar — Architecture, Interior & Landscape">
+<meta name="twitter:title" content="Studio Akaar — Architecture, Interior &amp; Landscape">
 <meta name="twitter:description" content="Architectural solutions shaped by functional clarity, systematic thinking and a respect for how people experience space.">
 <meta name="twitter:image" content="https://studio-akaar-website.vercel.app/images/img-002.jpg">
 
@@ -36,6 +36,26 @@
 .modalPrev{left:3vw}.modalNext{right:3vw}
 .modalCounter{position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:10px;color:#999}
 @media(max-width:800px){.modalBox{grid-template-columns:1fr;max-height:90vh}.modalImg{aspect-ratio:4/3}.modalInfo{padding:34px 28px}.modalNav{width:38px;height:38px;font-size:16px}.modalPrev{left:2vw}.modalNext{right:2vw}}
+
+/* Inquiry form modal (reuses .modalOverlay) */
+.formBox{background:var(--bg);max-width:560px;width:100%;max-height:88vh;overflow:auto;position:relative;padding:56px 46px;transform:translateY(16px);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.modalOverlay.open .formBox{transform:translateY(0)}
+.formBox .eyebrow{margin-bottom:14px}
+.formBox h3{font-size:clamp(28px,3.4vw,38px);font-weight:300;letter-spacing:-.03em;margin:0 0 12px;line-height:1.05}
+.formBox .formNote{font-size:13px;line-height:1.7;color:#777;margin:0 0 40px;max-width:420px}
+.field{margin-bottom:28px}
+.field label{display:block;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#999;margin-bottom:10px}
+.field input[type=text],.field input[type=tel],.field textarea{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;font-family:Manrope,Arial,sans-serif;font-size:15px;color:var(--ink);padding:8px 0;outline:none;transition:border-color .2s}
+.field input[type=text]:focus,.field input[type=tel]:focus,.field textarea:focus{border-color:var(--ink)}
+.field textarea{resize:vertical;min-height:90px;line-height:1.6;font-size:14px}
+.radioGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.radioGrid label{display:flex;align-items:center;gap:9px;font-family:Manrope,Arial,sans-serif;text-transform:none;letter-spacing:0;font-size:13px;color:var(--ink);border:1px solid var(--line);padding:11px 13px;cursor:pointer;transition:.2s;margin:0}
+.radioGrid input{accent-color:var(--ink);width:14px;height:14px;flex:none}
+.radioGrid label:has(input:checked){border-color:var(--ink);background:rgba(0,0,0,.03)}
+.formSubmit{border:0;background:#111;color:#fff;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;padding:15px 30px;cursor:pointer;transition:background .2s;margin-top:6px}
+.formSubmit:hover{background:var(--accent)}
+.formStatus{font-size:12px;color:#777;margin-top:16px;line-height:1.6}
+@media(max-width:560px){.formBox{padding:70px 26px 40px}.radioGrid{grid-template-columns:1fr}}
 
 /* Floating booking button */
 .bookFloat{position:fixed;left:24px;bottom:24px;z-index:90;background:#111;color:#fff;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:14px 22px;border-radius:30px;box-shadow:0 6px 24px rgba(0,0,0,.25);display:inline-flex;align-items:center;gap:10px;transition:transform .2s,background .2s}
@@ -83,7 +103,7 @@
 
 <section class="founder"><div class="founderImage"><img src="images/img-004.jpg" alt="Studio Akaar founder" loading="lazy"></div><div class="founderCopy"><p class="eyebrow">Founder / Architect</p><h2>M. Riyadh<br><span>Hassan</span></h2><p>Architect · Interior Designer · Landscape Designer</p><blockquote>"Our goal is to design spaces that are modern yet timeless, efficient yet expressive, and always purposeful."</blockquote><a class="textLink" href="#contact">Meet the studio <span>→</span></a></div></section>
 
-<footer id="contact"><div class="footerTop"><div><p class="eyebrow">Have a project in mind?</p><h2>Let's make<br><span>space work.</span></h2><div class="formCta"><a class="textLink" href="PASTE_YOUR_GOOGLE_FORM_LINK_HERE" target="_blank" rel="noopener">Open project inquiry form <span>→</span></a></div></div><a class="bigMail" href="mailto:info.akarstudio@gmail.com">info.akarstudio@gmail.com <span>↗</span></a></div><div class="footerBottom"><div><strong>Studio Akaar</strong><p>Dhaka, Bangladesh<br>+880 1790 568894</p></div><div><p class="eyebrow">Socials</p><a href="https://www.facebook.com/AkaarStudio">Facebook</a><a href="https://www.instagram.com/studioakaar">Instagram</a><a href="https://www.linkedin.com/company/studio-akaar">LinkedIn</a><a href="https://youtube.com/c/filmwd3d">YouTube</a></div><div class="copyright">© 2026 Studio Akaar<br>All rights reserved.</div></div></footer>
+<footer id="contact"><div class="footerTop"><div><p class="eyebrow">Have a project in mind?</p><h2>Let's make<br><span>space work.</span></h2><div class="formCta"><button class="textLink" type="button" onclick="openInquiry()">Open project inquiry form <span>→</span></button></div></div><a class="bigMail" href="mailto:info.akarstudio@gmail.com">info.akarstudio@gmail.com <span>↗</span></a></div><div class="footerBottom"><div><strong>Studio Akaar</strong><p>Dhaka, Bangladesh<br>+880 1790 568894</p></div><div><p class="eyebrow">Socials</p><a href="https://www.facebook.com/AkaarStudio">Facebook</a><a href="https://www.instagram.com/studioakaar">Instagram</a><a href="https://www.linkedin.com/company/studio-akaar">LinkedIn</a><a href="https://youtube.com/c/filmwd3d">YouTube</a></div><div class="copyright">© 2026 Studio Akaar<br>All rights reserved.</div></div></footer>
 
 <!-- Project detail popup -->
 <div class="modalOverlay" id="modal" onclick="if(event.target===this)closeProject()">
@@ -99,6 +119,43 @@
     </div>
   </div>
   <button class="modalNav modalNext" aria-label="Next project" onclick="stepProject(1)">→</button>
+</div>
+
+<!-- Project inquiry form popup -->
+<div class="modalOverlay" id="inquiryModal" onclick="if(event.target===this)closeInquiry()">
+  <div class="formBox">
+    <button class="modalClose" aria-label="Close" onclick="closeInquiry()">✕</button>
+    <p class="eyebrow">Project inquiry</p>
+    <h3>Tell us about<br>your project.</h3>
+    <p class="formNote">Share a few details and we'll get back to you. This opens your email app with everything filled in, addressed to <strong>info.akarstudio@gmail.com</strong>.</p>
+    <form id="inquiryForm" onsubmit="submitInquiry(event)">
+      <div class="field">
+        <label for="inqName">Name</label>
+        <input type="text" id="inqName" name="name" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="inqPhone">Contact number</label>
+        <input type="tel" id="inqPhone" name="phone" required autocomplete="tel">
+      </div>
+      <div class="field">
+        <label>Project type</label>
+        <div class="radioGrid">
+          <label><input type="radio" name="projectType" value="Residential" required>Residential</label>
+          <label><input type="radio" name="projectType" value="Commercial">Commercial</label>
+          <label><input type="radio" name="projectType" value="Institutional">Institutional</label>
+          <label><input type="radio" name="projectType" value="Interior">Interior</label>
+          <label><input type="radio" name="projectType" value="Landscape">Landscape</label>
+          <label><input type="radio" name="projectType" value="Other">Other</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="inqDetails">Tell us about the project</label>
+        <textarea id="inqDetails" name="details" placeholder="Location, approximate size, timeline, budget range, anything else that helps us understand the brief." required></textarea>
+      </div>
+      <button class="formSubmit" type="submit">Send inquiry <span>→</span></button>
+      <p class="formStatus" id="inquiryStatus"></p>
+    </form>
+  </div>
 </div>
 
 <!-- Floating booking button -->
@@ -175,6 +232,35 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight')stepProject(1);
   if(e.key==='ArrowLeft')stepProject(-1);
 });
+
+// Project inquiry form
+function openInquiry(){
+  document.getElementById('inquiryModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeInquiry(){
+  document.getElementById('inquiryModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('inquiryModal').classList.contains('open'))return;
+  if(e.key==='Escape')closeInquiry();
+});
+function submitInquiry(e){
+  e.preventDefault();
+  const f=e.target;
+  const name=f.name.value.trim();
+  const phone=f.phone.value.trim();
+  const type=(f.projectType.value)||'';
+  const details=f.details.value.trim();
+
+  const subject=`Project Inquiry — ${type} — ${name}`;
+  const body=`Name: ${name}\nContact number: ${phone}\nProject type: ${type}\n\nProject details:\n${details}`;
+  const mailto=`mailto:info.akarstudio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  window.location.href=mailto;
+  document.getElementById('inquiryStatus').textContent='Opening your email app with this inquiry filled in — hit send there to reach us.';
+}
 
 // swipe support for touch/mobile
 (function(){
