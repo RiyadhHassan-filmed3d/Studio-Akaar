@@ -57,6 +57,15 @@
 .formStatus{font-size:12px;color:#777;margin-top:16px;line-height:1.6}
 @media(max-width:560px){.formBox{padding:70px 26px 40px}.radioGrid{grid-template-columns:1fr}}
 
+/* Embedded Google Form modal */
+.gformBox{background:var(--bg);max-width:640px;width:100%;max-height:88vh;position:relative;transform:translateY(16px);transition:transform .35s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column}
+.modalOverlay.open .gformBox{transform:translateY(0)}
+.gformHead{padding:26px 30px 18px;border-bottom:1px solid var(--line)}
+.gformHead .eyebrow{margin:0}
+.gformFrame{flex:1;overflow:auto}
+.gformFrame iframe{width:100%;height:70vh;border:0;display:block}
+@media(max-width:560px){.gformFrame iframe{height:75vh}}
+
 /* Floating booking button */
 .bookFloat{position:fixed;left:24px;bottom:24px;z-index:90;background:#111;color:#fff;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:14px 22px;border-radius:30px;box-shadow:0 6px 24px rgba(0,0,0,.25);display:inline-flex;align-items:center;gap:10px;transition:transform .2s,background .2s}
 .bookFloat:hover{background:var(--accent);transform:translateY(-2px)}
@@ -121,40 +130,16 @@
   <button class="modalNav modalNext" aria-label="Next project" onclick="stepProject(1)">→</button>
 </div>
 
-<!-- Project inquiry form popup -->
+<!-- Project inquiry form popup (embedded Google Form) -->
 <div class="modalOverlay" id="inquiryModal" onclick="if(event.target===this)closeInquiry()">
-  <div class="formBox">
+  <div class="gformBox">
     <button class="modalClose" aria-label="Close" onclick="closeInquiry()">✕</button>
-    <p class="eyebrow">Project inquiry</p>
-    <h3>Tell us about<br>your project.</h3>
-    <p class="formNote">Share a few details and we'll get back to you. This opens your email app with everything filled in, addressed to <strong>info.akarstudio@gmail.com</strong>.</p>
-    <form id="inquiryForm" onsubmit="submitInquiry(event)">
-      <div class="field">
-        <label for="inqName">Name</label>
-        <input type="text" id="inqName" name="name" required autocomplete="name">
-      </div>
-      <div class="field">
-        <label for="inqPhone">Contact number</label>
-        <input type="tel" id="inqPhone" name="phone" required autocomplete="tel">
-      </div>
-      <div class="field">
-        <label>Project type</label>
-        <div class="radioGrid">
-          <label><input type="radio" name="projectType" value="Residential" required>Residential</label>
-          <label><input type="radio" name="projectType" value="Commercial">Commercial</label>
-          <label><input type="radio" name="projectType" value="Institutional">Institutional</label>
-          <label><input type="radio" name="projectType" value="Interior">Interior</label>
-          <label><input type="radio" name="projectType" value="Landscape">Landscape</label>
-          <label><input type="radio" name="projectType" value="Other">Other</label>
-        </div>
-      </div>
-      <div class="field">
-        <label for="inqDetails">Tell us about the project</label>
-        <textarea id="inqDetails" name="details" placeholder="Location, approximate size, timeline, budget range, anything else that helps us understand the brief." required></textarea>
-      </div>
-      <button class="formSubmit" type="submit">Send inquiry <span>→</span></button>
-      <p class="formStatus" id="inquiryStatus"></p>
-    </form>
+    <div class="gformHead">
+      <p class="eyebrow">Project inquiry</p>
+    </div>
+    <div class="gformFrame">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeKLpHWI_oUkzi4JHRqO1qfhVFoyCanGWHHWAxIfl1wo5Sfzw/viewform?embedded=true" title="Studio Akaar project inquiry form">Loading…</iframe>
+    </div>
   </div>
 </div>
 
@@ -233,7 +218,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft')stepProject(-1);
 });
 
-// Project inquiry form
+// Project inquiry form (embedded Google Form — submits straight to Google, no extra JS needed)
 function openInquiry(){
   document.getElementById('inquiryModal').classList.add('open');
   document.body.style.overflow='hidden';
@@ -246,21 +231,6 @@ document.addEventListener('keydown',e=>{
   if(!document.getElementById('inquiryModal').classList.contains('open'))return;
   if(e.key==='Escape')closeInquiry();
 });
-function submitInquiry(e){
-  e.preventDefault();
-  const f=e.target;
-  const name=f.name.value.trim();
-  const phone=f.phone.value.trim();
-  const type=(f.projectType.value)||'';
-  const details=f.details.value.trim();
-
-  const subject=`Project Inquiry — ${type} — ${name}`;
-  const body=`Name: ${name}\nContact number: ${phone}\nProject type: ${type}\n\nProject details:\n${details}`;
-  const mailto=`mailto:info.akarstudio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-  window.location.href=mailto;
-  document.getElementById('inquiryStatus').textContent='Opening your email app with this inquiry filled in — hit send there to reach us.';
-}
 
 // swipe support for touch/mobile
 (function(){
