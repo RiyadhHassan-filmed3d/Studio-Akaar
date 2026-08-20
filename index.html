@@ -99,6 +99,7 @@
 .modalInfo span{font-family:'DM Mono',monospace;text-transform:uppercase;font-size:9px;letter-spacing:.1em;color:#999}
 .modalInfo h3{font-size:clamp(26px,3vw,36px);font-weight:300;letter-spacing:-.03em;margin:16px 0 20px;line-height:1.05}
 .modalInfo p{font-size:14px;line-height:1.8;color:#555}
+.modalMeta{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-top:-8px}
 .modalClose{position:absolute;top:18px;right:18px;background:rgba(0,0,0,.55);color:#fff;border:0;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;line-height:1;z-index:2}
 .modalNav{position:fixed;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.4);color:#fff;border:0;width:46px;height:46px;border-radius:50%;cursor:pointer;font-size:20px;z-index:101;transition:background .2s}
 .modalNav:hover{background:rgba(0,0,0,.7)}
@@ -219,6 +220,7 @@
       <span id="modalCat"></span>
       <h3 id="modalTitle"></h3>
       <p id="modalDesc"></p>
+      <p class="modalMeta" id="modalMeta"></p>
       <span class="modalCounter" id="modalCounter"></span>
     </div>
   </div>
@@ -282,14 +284,129 @@
 </button>
 
 <script>
-// Each project: [image, category, title, number, short writeup]
-// NOTE: the "desc" text below is placeholder copy — swap in your real project write-ups.
-const work=[{"title": "4O.4O Residence", "category": "Residential Building", "description": "this project is following contemporary style , raw concrete…", "images": ["images/gallery/4o-4o-residence-01.jpg", "images/gallery/4o-4o-residence-02.jpg", "images/gallery/4o-4o-residence-03.jpg", "images/gallery/4o-4o-residence-04.jpg"], "num": "01"}, {"title": "AC World Ltd Banani office", "category": "Commercial Interior", "description": "A dynamic playful office space designed agility", "images": ["images/gallery/ac-world-ltd-banani-office-01.jpg", "images/gallery/ac-world-ltd-banani-office-02.jpg", "images/gallery/ac-world-ltd-banani-office-03.jpg", "images/gallery/ac-world-ltd-banani-office-04.jpg", "images/gallery/ac-world-ltd-banani-office-05.jpg"], "num": "02"}, {"title": "ACW Gulshan Office", "category": "Commercial Interior", "description": "A playful office with dynamic furniture layout", "images": ["images/gallery/acw-gulshan-office-01.jpg", "images/gallery/acw-gulshan-office-02.jpg", "images/gallery/acw-gulshan-office-03.jpg", "images/gallery/acw-gulshan-office-04.jpg", "images/gallery/acw-gulshan-office-05.jpg", "images/gallery/acw-gulshan-office-06.jpg"], "num": "03"}, {"title": "ACW Bonosree Office", "category": "Commercial Interior", "description": "A thoughtful idea that embed with colorful dynamic interior", "images": ["images/gallery/acw-bonosree-office-01.jpg", "images/gallery/acw-bonosree-office-02.jpg", "images/gallery/acw-bonosree-office-03.jpg", "images/gallery/acw-bonosree-office-04.jpg", "images/gallery/acw-bonosree-office-05.jpg", "images/gallery/acw-bonosree-office-06.jpg", "images/gallery/acw-bonosree-office-07.jpg", "images/gallery/acw-bonosree-office-08.jpg", "images/gallery/acw-bonosree-office-09.jpg", "images/gallery/acw-bonosree-office-10.jpg"], "num": "04"}, {"title": "Jessore Jam-e mosque", "category": "Institutional Design", "description": "A mosque complex that is naturally ventilated with a devine space", "images": ["images/gallery/jessore-jam-e-mosque-01.jpg"], "num": "05"}, {"title": "Shribordi Jam e moque", "category": "Institutional Design", "description": "a mosque complex using natural brick and local material with a unique scale and amenities", "images": ["images/gallery/shribordi-jam-e-moque-01.jpg", "images/gallery/shribordi-jam-e-moque-02.jpg", "images/gallery/shribordi-jam-e-moque-03.jpg", "images/gallery/shribordi-jam-e-moque-04.jpg", "images/gallery/shribordi-jam-e-moque-05.jpg"], "num": "06"}, {"title": "Mr Sajol Residence", "category": "Residential Interior", "description": "A warm cozy comfortable interior focusing natural light", "images": ["images/gallery/mr-sajol-residence-01.jpg", "images/gallery/mr-sajol-residence-02.jpg", "images/gallery/mr-sajol-residence-03.jpg", "images/gallery/mr-sajol-residence-04.jpg"], "num": "07"}, {"title": "Mr Shakib Hossain Residence", "category": "Residential Interior", "description": "a dark sophisticated material- iterior project", "images": ["images/gallery/mr-shakib-hossain-residence-01.jpg", "images/gallery/mr-shakib-hossain-residence-02.jpg", "images/gallery/mr-shakib-hossain-residence-03.jpg", "images/gallery/mr-shakib-hossain-residence-04.jpg"], "num": "08"}, {"title": "Hilly Landscape", "category": "Landscape Design", "description": "A dynamic natural hilly landscape that open up the area for the user of nearest neighbourhood", "images": ["images/gallery/hilly-landscape-01.jpg", "images/gallery/hilly-landscape-02.jpg", "images/gallery/hilly-landscape-03.jpg", "images/gallery/hilly-landscape-04.jpg", "images/gallery/hilly-landscape-05.jpg"], "num": "09"}, {"title": "Mr Boby Residence", "category": "Landscape Design", "description": "a Landscape Design that  respects it's surrounding and create interesting hierarchy", "images": ["images/gallery/mr-boby-residence-01.jpg", "images/gallery/mr-boby-residence-02.jpg", "images/gallery/mr-boby-residence-03.jpg", "images/gallery/mr-boby-residence-04.jpg", "images/gallery/mr-boby-residence-05.jpg", "images/gallery/mr-boby-residence-06.jpg"], "num": "10"}, {"title": "Chairman's Residence", "category": "Residential Interior", "description": "a lavish sophisticated but minimal interior", "images": ["images/gallery/chairman-s-residence-01.jpg", "images/gallery/chairman-s-residence-02.jpg", "images/gallery/chairman-s-residence-03.jpg", "images/gallery/chairman-s-residence-04.jpg", "images/gallery/chairman-s-residence-05.jpg", "images/gallery/chairman-s-residence-06.jpg", "images/gallery/chairman-s-residence-07.jpg"], "num": "11"}, {"title": "The Body Factory", "category": "Institutional Design", "description": "A gym that reflects dedication, hard work and sophistication", "images": ["images/gallery/the-body-factory-01.jpg"], "num": "12"}, {"title": "Chairman's Residence", "category": "Residential Building", "description": "a HIGH QUALITY EXTERIOR design that create bold approach to", "images": ["images/gallery/chairman-s-residence-2-01.jpg"], "num": "13"}, {"title": "Nihan's Residence", "category": "Residential Building", "description": "A single family residence that is climate responsive and red brick - concrete texture", "images": ["images/gallery/nihan-s-residence-01.jpg", "images/gallery/nihan-s-residence-02.jpg", "images/gallery/nihan-s-residence-03.jpg"], "num": "14"}, {"title": "Shwapno", "category": "Residential Building", "description": "A multi storied building that accommodate multiple families with a healthy environment with a bold approach", "images": ["images/gallery/shwapno-01.jpg", "images/gallery/shwapno-02.jpg"], "num": "15"}, {"title": "Nirala", "category": "Residential Building", "description": "A duplex residence that is climate responsive archoitecture merge with surround", "images": ["images/gallery/nirala-01.jpg", "images/gallery/nirala-02.jpg"], "num": "16"}, {"title": "The Oakland Residence", "category": "Residential Building", "description": "A vacation house that can contain a family for the vacation period facilitied with swimming pool", "images": ["images/gallery/the-oakland-residence-01.jpg"], "num": "17"}, {"title": "Mr Din Mohammad Residence", "category": "Residential Interior", "description": "This contemporary classy project used stunning geometries that embed with necessary details", "images": ["images/gallery/mr-din-mohammad-residence-01.jpg", "images/gallery/mr-din-mohammad-residence-02.jpg", "images/gallery/mr-din-mohammad-residence-03.jpg", "images/gallery/mr-din-mohammad-residence-04.jpg", "images/gallery/mr-din-mohammad-residence-05.jpg", "images/gallery/mr-din-mohammad-residence-06.jpg", "images/gallery/mr-din-mohammad-residence-07.jpg"], "num": "18"}, {"title": "Mr Niamul's Residence", "category": "Residential Interior", "description": "a well thought interior design using dark textured material with light surrounding creating a perfect balance", "images": ["images/gallery/mr-niamul-s-residence-01.jpg", "images/gallery/mr-niamul-s-residence-02.jpg", "images/gallery/mr-niamul-s-residence-03.jpg", "images/gallery/mr-niamul-s-residence-04.jpg", "images/gallery/mr-niamul-s-residence-05.jpg", "images/gallery/mr-niamul-s-residence-06.jpg"], "num": "19"}, {"title": "Mr Kabir Hasan residence", "category": "Residential Interior", "description": "A highlighted project with stunning visuals  our aim was to maximise day light.", "images": ["images/gallery/mr-kabir-hasan-residence-01.jpg", "images/gallery/mr-kabir-hasan-residence-02.jpg"], "num": "20"}, {"title": "Residential area", "category": "Public Space Design", "description": "a residential area masterplan visalization and design project it includes multiple institution and public space", "images": ["images/gallery/residential-area-01.jpg", "images/gallery/residential-area-02.jpg", "images/gallery/residential-area-03.jpg", "images/gallery/residential-area-04.jpg", "images/gallery/residential-area-05.jpg", "images/gallery/residential-area-06.jpg", "images/gallery/residential-area-07.jpg"], "num": "21"}, {"title": "Shipo kala", "category": "Set Design", "description": "a HIGH QUALITY EXTERIOR design that can visualize how the stage should be", "images": ["images/gallery/shipo-kala-01.jpg"], "num": "22"}, {"title": "Neerala", "category": "Residential Building", "description": "A veryHhigh quality rendeing", "images": ["images/gallery/neerala-01.jpg"], "num": "23"}, {"title": "MTb 1200 MW powerplant", "category": "Landscape Design", "description": "A large masterplan to work with the huge large site the 1200 mw power plant . We developed the barrend ;and to domrthi", "images": ["images/gallery/mtb-1200-mw-powerplant-01.jpg", "images/gallery/mtb-1200-mw-powerplant-02.jpg", "images/gallery/mtb-1200-mw-powerplant-03.jpg", "images/gallery/mtb-1200-mw-powerplant-04.jpg", "images/gallery/mtb-1200-mw-powerplant-05.jpg", "images/gallery/mtb-1200-mw-powerplant-06.jpg"], "num": "24"}];
+// ── LIVE BACKEND ─────────────────────────────────────────────────────────
+// Project data is no longer hardcoded here. It's read live from a published
+// Google Sheet CSV. To update projects, edit the Sheet — no code changes,
+// no GitHub commit needed for text/metadata (photo files themselves still
+// need to be uploaded to images/gallery/ on GitHub, matching the filenames
+// used in the Sheet).
+//
+// SETUP (one-time):
+// 1. Open the studio_akaar_backend.xlsx file, upload it to Google Sheets
+//    (File > Import > Upload), or recreate its columns in a new Sheet.
+// 2. In Google Sheets: File > Share > Publish to web > select the sheet
+//    tab > format "Comma-separated values (.csv)" > Publish.
+// 3. Copy the link it gives you and paste it below, replacing the
+//    placeholder between the quotes.
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQYK9l0JYTYe3pNpxRSdS7hWHu5h_vSF2OuDe7qwnUFd4SBv6ufXQp7YT99265m6Uovg5qpEleGOrlY/pub?output=csv';
+
 const services=['Architecture','Interior Design','Landscape Design','3D Modeling & Rendering','BOQ & Documentation','Construction Supervision','Design Consultancy','Project Handover'];
-const filters=['All','Residential Building','Commercial Interior','Institutional Design','Residential Interior','Landscape Design','Public Space Design','Set Design'];
+let work=[];
+let filters=['All'];
 let active='All';
 let scrollRevealIO=null; // must be declared before render() can ever run
 
+// Small self-contained CSV parser — handles quoted fields (commas, quotes,
+// newlines inside a cell), which is what Google's published CSV export uses.
+function parseCSV(text){
+  const rows=[];
+  let field='',row=[],inQuotes=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i],next=text[i+1];
+    if(inQuotes){
+      if(c==='"'&&next==='"'){field+='"';i++;}
+      else if(c==='"'){inQuotes=false;}
+      else field+=c;
+    }else{
+      if(c==='"'){inQuotes=true;}
+      else if(c===','){row.push(field);field='';}
+      else if(c==='\r'){/*skip*/}
+      else if(c==='\n'){row.push(field);rows.push(row);row=[];field='';}
+      else field+=c;
+    }
+  }
+  if(field.length||row.length){row.push(field);rows.push(row);}
+  return rows;
+}
+
+function buildWorkFromRows(rows){
+  if(!rows.length)return [];
+  const header=rows[0].map(h=>h.trim().toLowerCase());
+  const col=name=>header.indexOf(name);
+  const iFile=col('filename'),iTitle=col('title'),iCat=col('category'),
+        iLoc=col('site_location'),iSize=col('site_size'),iDesc=col('description'),
+        iStatus=col('status'),iHero=col('hero');
+
+  let groups=[],cur=null;
+  for(let r=1;r<rows.length;r++){
+    const row=rows[r];
+    const filename=(row[iFile]||'').trim();
+    if(!filename)continue;
+    const title=(row[iTitle]||'').trim();
+    const category=(row[iCat]||'').trim();
+    const loc=(row[iLoc]||'').trim();
+    const size=(row[iSize]||'').trim();
+    const desc=(row[iDesc]||'').trim();
+    const status=(row[iStatus]||'').trim();
+    const isHero=(row[iHero]||'').trim().toLowerCase()==='yes';
+
+    if(title){
+      cur={title,category,site_location:loc,site_size:size,description:desc,status,photos:[]};
+      groups.push(cur);
+    }
+    if(!cur)continue;
+    if(category&&!cur.category)cur.category=category;
+    if(loc&&!cur.site_location)cur.site_location=loc;
+    if(size&&!cur.site_size)cur.site_size=size;
+    if(desc&&!cur.description)cur.description=desc;
+    if(status&&!cur.status)cur.status=status;
+    cur.photos.push({filename,isHero});
+  }
+
+  // Draft rows stay hidden from the live site — anything not explicitly
+  // marked "Draft" is treated as published, so a blank status still shows.
+  groups=groups.filter(g=>g.status.trim().toLowerCase()!=='draft');
+
+  return groups.map((g,idx)=>{
+    const heroes=g.photos.filter(p=>p.isHero);
+    const heroFile=heroes.length?heroes[0].filename:g.photos[0].filename;
+    const rest=g.photos.map(p=>p.filename).filter(f=>f!==heroFile);
+    const images=[heroFile,...rest].map(f=>'images/gallery/'+f);
+    return{
+      title:g.title,category:g.category||'Uncategorized',
+      site_location:g.site_location,site_size:g.site_size,
+      description:g.description,images,
+      num:String(idx+1).padStart(2,'0')
+    };
+  });
+}
+
+async function loadProjects(){
+  const grid=document.getElementById('grid');
+  try{
+    if(SHEET_CSV_URL.indexOf('PASTE_YOUR')===0){
+      grid.innerHTML='<p style="padding:0 4vw;color:#999;font-size:13px">Project data source not connected yet — paste your published Google Sheet CSV link into SHEET_CSV_URL in the code.</p>';
+      return;
+    }
+    grid.innerHTML='<p style="padding:0 4vw;color:#999;font-size:13px">Loading projects…</p>';
+    const res=await fetch(SHEET_CSV_URL,{cache:'no-store'});
+    if(!res.ok)throw new Error('fetch failed');
+    const text=await res.text();
+    const rows=parseCSV(text);
+    work=buildWorkFromRows(rows);
+    filters=['All'];
+    work.forEach(p=>{if(filters.indexOf(p.category)===-1)filters.push(p.category);});
+
+    const typologyCount=new Set(work.map(p=>p.category)).size;
+    document.getElementById('workNote').textContent=work.length
+      ?`${work.length} selected projects across ${typologyCount} typologies — a growing archive, with more added regularly.`
+      :'No published projects yet.';
+    render();
+  }catch(err){
+    grid.innerHTML='<p style="padding:0 4vw;color:#999;font-size:13px">Couldn\'t load the latest projects right now — please check back shortly.</p>';
+    console.error('Project load error:',err);
+  }
+}
 function render(){
   document.getElementById('filters').innerHTML=filters.map(f=>`<button class="${f===active?'active':''}" onclick="active='${f}';render()">${f}</button>`).join('');
   const list=work.filter(x=>active==='All'||x.category===active);
@@ -336,6 +453,11 @@ function showModalProject(){
   document.getElementById('modalCat').textContent=p.category+' — '+p.num;
   document.getElementById('modalTitle').textContent=p.title;
   document.getElementById('modalDesc').textContent=p.description;
+  const metaParts=[];
+  if(p.site_location)metaParts.push(p.site_location);
+  if(p.site_size)metaParts.push(p.site_size);
+  document.getElementById('modalMeta').textContent=metaParts.join(' · ');
+  document.getElementById('modalMeta').style.display=metaParts.length?'block':'none';
   document.getElementById('modalCounter').textContent=(modalIndex+1)+' / '+modalList.length;
   const thumbs=document.getElementById('modalThumbs');
   const dots=document.getElementById('imgDots');
@@ -518,9 +640,7 @@ function submitInquiry(e){
 })();
 
 document.getElementById('serviceList').innerHTML=services.map((s,i)=>`<div><span>0${i+1}</span><strong>${s}</strong><b>↗</b></div>`).join('');
-const typologyCount=new Set(work.map(p=>p.category)).size;
-document.getElementById('workNote').textContent=`${work.length} selected projects across ${typologyCount} typologies — a growing archive, with more added regularly.`;
-render();
+loadProjects();
 document.getElementById('menubtn').onclick=()=>document.getElementById('navlinks').classList.toggle('open');
 document.querySelectorAll('.navlinks a').forEach(a=>a.onclick=()=>document.getElementById('navlinks').classList.remove('open'));
 
