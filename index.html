@@ -135,7 +135,7 @@
   .heroImage.seen img,.introImage.seen img,.founderImage.seen img,.projectImg.seen img{filter:grayscale(0)}
 }
 
-@media(max-width:800px){.nav{height:66px}.brand img{height:32px}.navlinks{display:none}.navlinks.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#111;padding:30px 8vw;flex-direction:column;gap:22px}.menubtn{display:block}.menubtn span{display:block;width:24px;height:1px;background:#fff;margin:6px}.hero{min-height:650px}.heroText{left:7vw;bottom:13vh}.heroMeta{left:7vw;right:7vw}.heroMeta span:nth-child(2){display:none}.intro,.services{display:block;padding:100px 7vw}.intro .sectionNo,.services .sectionNo{margin-bottom:70px}.introImage{height:430px;margin-top:60px}.work{padding:70px 7vw 100px}.workHead{display:block;padding:0 0 45px}.workNote{margin-top:25px}.filters{padding:0 0 35px}.grid{display:block}.project,.project.p1{margin:0 0 55px}.projectImg,.project:nth-child(3n) .projectImg,.project:nth-child(4n) .projectImg{aspect-ratio:4/5}.statement{padding:100px 7vw;min-height:500px}.statement p{font-size:38px}.serviceList{margin-top:60px}.founder{display:block}.founderImage{height:430px}.founderCopy{padding:80px 7vw}.footerTop{display:block;padding:100px 7vw}.bigMail{display:inline-block;margin-top:40px;font-size:10px}.bigMail span{margin-left:20px}.footerBottom{padding:45px 7vw;grid-template-columns:1fr 1fr}.copyright{text-align:left;grid-column:1/-1;margin-top:20px}.footerTop h2{font-size:55px}}
+@media(max-width:800px){.nav{height:66px}.brand img{height:32px}.navlinks{display:none}.navlinks.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#111;padding:30px 8vw;flex-direction:column;gap:22px}.menubtn{display:block}.menubtn span{display:block;width:24px;height:1px;background:#fff;margin:6px}.hero{min-height:650px}.heroText{left:7vw;bottom:13vh}.heroMeta{left:7vw;right:7vw}.heroMeta span:nth-child(2){display:none}.intro,.services{display:block;padding:100px 7vw}.intro .sectionNo,.services .sectionNo{margin-bottom:70px}.introImage{height:430px;margin-top:60px}.work{padding:70px 7vw 100px}.workHead{display:block;padding:0 0 45px}.workNote{margin-top:25px}.filters{position:sticky;top:66px;z-index:20;background:var(--bg);padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:20px}.grid{display:block}.project,.project.p1{margin:0 0 55px}.projectImg,.project:nth-child(3n) .projectImg,.project:nth-child(4n) .projectImg{aspect-ratio:4/5}.statement{padding:100px 7vw;min-height:500px}.statement p{font-size:38px}.serviceList{margin-top:60px}.founder{display:block}.founderImage{height:430px}.founderCopy{padding:80px 7vw}.footerTop{display:block;padding:100px 7vw}.bigMail{display:inline-block;margin-top:40px;font-size:10px}.bigMail span{margin-left:20px}.footerBottom{padding:45px 7vw;grid-template-columns:1fr 1fr}.copyright{text-align:left;grid-column:1/-1;margin-top:20px}.footerTop h2{font-size:55px}}
 </style></head><body>
 <header class="nav"><a href="#top" class="brand" aria-label="Studio Akaar"><img src="images/logo-light.png" alt="Studio Akaar — architecture, interior and landscape design studio in Dhaka, Bangladesh"></a><nav class="navlinks" id="navlinks"><a href="#work">Work</a><a href="#studio">Studio</a><a href="#services">Services</a><a href="#contact">Contact</a></nav><button class="menubtn" id="menubtn"><span></span><span></span></button></header>
 
@@ -240,19 +240,22 @@
 <script>
 // Each project: [image, category, title, number, short writeup]
 // NOTE: the "desc" text below is placeholder copy — swap in your real project write-ups.
+// Order is interleaved across categories on purpose (not grouped) — on a single-column
+// mobile feed, a visitor scrolling past 3 houses before seeing any commercial or
+// institutional work is a common reason they bounce before reaching relevant work.
 const work=[
 ['img-002.jpg','Building Projects','House 40.40','01','A compact urban residence organised around a central light well, using exposed brick and controlled apertures to balance privacy with daylight.'],
-['img-013.jpg','Building Projects','Residential Architecture','02','A family home planned around functional clarity, with material honesty and a restrained material palette carried through every level.'],
-['img-024.jpg','Building Projects','Contemporary Residence','03','A contemporary residence exploring volume and threshold, where solid and void are used to shape how residents move through the home.'],
-['img-027.jpg','Commercial Projects','Brand Office Environment','04','A workplace interior designed to express brand identity through material choice, spatial sequencing and considered lighting.'],
-['img-040.jpg','Commercial Projects','Retail & Workplace','05','A mixed-use commercial fit-out balancing retail visibility with functional back-of-house workplace planning.'],
-['img-058.jpg','Institutional Projects','Institutional Architecture','06','An institutional building designed for durability and civic presence, prioritising clear circulation and shared public space.'],
-['img-063.jpg','Institutional Projects','Civic / Mixed Use','07','A civic mixed-use project bringing together public and semi-public functions within one coherent architectural language.'],
-['img-075.jpg','Residential Interior','Residential Interior','08','An interior scheme focused on daily livability — material warmth, storage discipline and light used as a spatial tool.'],
-['img-088.jpg','Residential Interior','Private Residence','09','A private residence interior built around a quiet, considered material palette that ages well and resists trend.'],
-['img-098.jpg','Residential Interior','Material & Detail','10','A detail-driven interior project where junctions, joinery and finish were treated as primary design decisions.'],
-['img-109.jpg','Set Design','Set Design','11','A temporary set design translating architectural principles of framing and scale into a short-lived spatial narrative.'],
-['img-115.jpg','Landscape Projects','Landscape & Outdoor Space','12','A landscape and outdoor space designed to mediate between built form and site, using planting and hard material in balance.']
+['img-027.jpg','Commercial Projects','Brand Office Environment','02','A workplace interior designed to express brand identity through material choice, spatial sequencing and considered lighting.'],
+['img-058.jpg','Institutional Projects','Institutional Architecture','03','An institutional building designed for durability and civic presence, prioritising clear circulation and shared public space.'],
+['img-075.jpg','Residential Interior','Residential Interior','04','An interior scheme focused on daily livability — material warmth, storage discipline and light used as a spatial tool.'],
+['img-109.jpg','Set Design','Set Design','05','A temporary set design translating architectural principles of framing and scale into a short-lived spatial narrative.'],
+['img-115.jpg','Landscape Projects','Landscape & Outdoor Space','06','A landscape and outdoor space designed to mediate between built form and site, using planting and hard material in balance.'],
+['img-013.jpg','Building Projects','Residential Architecture','07','A family home planned around functional clarity, with material honesty and a restrained material palette carried through every level.'],
+['img-040.jpg','Commercial Projects','Retail & Workplace','08','A mixed-use commercial fit-out balancing retail visibility with functional back-of-house workplace planning.'],
+['img-063.jpg','Institutional Projects','Civic / Mixed Use','09','A civic mixed-use project bringing together public and semi-public functions within one coherent architectural language.'],
+['img-088.jpg','Residential Interior','Private Residence','10','A private residence interior built around a quiet, considered material palette that ages well and resists trend.'],
+['img-024.jpg','Building Projects','Contemporary Residence','11','A contemporary residence exploring volume and threshold, where solid and void are used to shape how residents move through the home.'],
+['img-098.jpg','Residential Interior','Material & Detail','12','A detail-driven interior project where junctions, joinery and finish were treated as primary design decisions.']
 ];
 const services=['Architecture','Interior Design','Landscape Design','3D Modeling & Rendering','BOQ & Documentation','Construction Supervision','Design Consultancy','Project Handover'];
 const filters=['All','Building Projects','Commercial Projects','Institutional Projects','Residential Interior','Set Design','Landscape Projects'];
