@@ -84,7 +84,7 @@
 .modalBox{background:var(--bg);max-width:920px;width:100%;max-height:86vh;overflow:auto;display:grid;grid-template-columns:1.1fr 1fr;position:relative;transform:translateY(16px);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
 .modalOverlay.open .modalBox{transform:translateY(0)}
 .modalImgWrap{display:flex;flex-direction:column;min-height:0}
-.modalImg{aspect-ratio:4/5;overflow:hidden;background:#ddd;position:relative}
+.modalImg{height:56vh;max-height:520px;overflow:hidden;background:#ddd;position:relative}
 .modalImg img{width:100%;height:100%;object-fit:cover}
 .imgDots{display:none;gap:7px;position:absolute;left:50%;bottom:14px;transform:translateX(-50%);padding:8px 10px;background:rgba(0,0,0,.4);border-radius:20px}
 .imgDots span{width:16px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -104,7 +104,7 @@
 .modalNav:hover{background:rgba(0,0,0,.7)}
 .modalPrev{left:3vw}.modalNext{right:3vw}
 .modalCounter{position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:10px;color:#999}
-@media(max-width:800px){.modalBox{grid-template-columns:1fr;max-height:90vh}.modalImg{aspect-ratio:4/3}.modalInfo{padding:34px 28px}.modalNav{width:38px;height:38px;font-size:16px}.modalPrev{left:2vw}.modalNext{right:2vw}}
+@media(max-width:800px){.modalBox{grid-template-columns:1fr;max-height:92vh}.modalImg{height:46vh;max-height:400px}.modalInfo{padding:34px 28px}.modalNav{width:38px;height:38px;font-size:16px}.modalPrev{left:2vw}.modalNext{right:2vw}}
 
 /* Inquiry form modal (reuses .modalOverlay) */
 .formBox{background:var(--bg);max-width:560px;width:100%;max-height:88vh;overflow:auto;position:relative;padding:56px 46px;transform:translateY(16px);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
@@ -341,13 +341,24 @@ function showModalProject(){
   const dots=document.getElementById('imgDots');
   if(p.images.length>1){
     thumbs.style.display='flex';
-    thumbs.innerHTML=p.images.map((src,i)=>`<img src="${src}" class="${i===modalImgIndex?'active':''}" onclick="event.stopPropagation();selectModalImg(${i})" alt="">`).join('');
-    dots.innerHTML=p.images.map((_,i)=>`<span class="${i===modalImgIndex?'active':''}" onclick="event.stopPropagation();selectModalImg(${i})"></span>`).join('');
+    thumbs.innerHTML=p.images.map((src,i)=>`<img src="${src}" class="${i===modalImgIndex?'active':''}" onclick="event.stopPropagation();manualSelectModalImg(${i})" alt="">`).join('');
+    dots.innerHTML=p.images.map((_,i)=>`<span class="${i===modalImgIndex?'active':''}" onclick="event.stopPropagation();manualSelectModalImg(${i})"></span>`).join('');
   }else{
     thumbs.style.display='none';
     thumbs.innerHTML='';
     dots.innerHTML='';
   }
+  startAutoplay(); // (re)start the slideshow for whichever project is now showing
+}
+let autoplayTimer=null;
+function startAutoplay(){
+  clearAutoplay();
+  const p=modalList[modalIndex];
+  if(!p||p.images.length<2)return; // nothing to auto-advance for a single-photo project
+  autoplayTimer=setInterval(()=>stepModalImg(1),3500);
+}
+function clearAutoplay(){
+  if(autoplayTimer){clearInterval(autoplayTimer);autoplayTimer=null;}
 }
 function selectModalImg(i){
   modalImgIndex=i;
@@ -361,6 +372,10 @@ function stepModalImg(dir){
   if(!p||p.images.length<2)return;
   selectModalImg((modalImgIndex+dir+p.images.length)%p.images.length);
 }
+// manual interaction (thumbnail/dot click, or swipe on the photo) resets the slideshow
+// clock rather than fighting it — so auto and manual control coexist cleanly
+function manualSelectModalImg(i){selectModalImg(i);startAutoplay();}
+function manualStepModalImg(dir){stepModalImg(dir);startAutoplay();}
 function stepProject(dir){
   if(!modalList.length)return;
   modalIndex=(modalIndex+dir+modalList.length)%modalList.length; // loops around both ends
@@ -370,6 +385,7 @@ function stepProject(dir){
 function closeProject(){
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow='';
+  clearAutoplay();
 }
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('modal').classList.contains('open'))return;
@@ -456,6 +472,23 @@ function submitInquiry(e){
   setTimeout(closeInquiry, 2200);
 }
 
+// MacBook / trackpad two-finger horizontal swipe — also moves between PROJECTS,
+// same as the touch swipe below. Cooldown prevents one swipe firing multiple jumps.
+(function(){
+  const box=document.querySelector('.modalBox');
+  let wheelLocked=false;
+  box.addEventListener('wheel',e=>{
+    if(!document.getElementById('modal').classList.contains('open'))return;
+    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)&&Math.abs(e.deltaX)>12){
+      e.preventDefault();
+      if(wheelLocked)return;
+      wheelLocked=true;
+      stepProject(e.deltaX>0?1:-1);
+      setTimeout(()=>{wheelLocked=false;},550);
+    }
+  },{passive:false});
+})();
+
 // swipe support for touch/mobile — swiping the whole box moves between PROJECTS
 (function(){
   const box=document.querySelector('.modalBox');
@@ -478,7 +511,7 @@ function submitInquiry(e){
   img.addEventListener('touchend',e=>{
     if(touchX===null)return;
     const dx=e.changedTouches[0].clientX-touchX;
-    if(Math.abs(dx)>40)stepModalImg(dx<0?1:-1);
+    if(Math.abs(dx)>40)manualStepModalImg(dx<0?1:-1);
     touchX=null;
     e.stopPropagation();
   });
