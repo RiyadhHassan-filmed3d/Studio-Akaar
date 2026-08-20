@@ -61,6 +61,11 @@
 .otherText:disabled{opacity:.4}
 @media(max-width:560px){.formBox{padding:70px 26px 40px}.radioGrid{grid-template-columns:1fr}}
 
+.formAltAction{margin-top:34px;padding-top:26px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.formAltAction span{font-size:12px;color:#777}
+.formAltAction a{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid currentColor;padding-bottom:4px;display:inline-flex;gap:8px;white-space:nowrap}
+.formAltAction a span{font-size:13px;color:inherit}
+
 /* Floating booking button */
 .bookFloat{position:fixed;left:24px;bottom:24px;z-index:90;background:#111;color:#fff;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:14px 22px;border-radius:30px;box-shadow:0 6px 24px rgba(0,0,0,.25);display:inline-flex;align-items:center;gap:10px;transition:transform .2s,background .2s}
 .bookFloat:hover{background:var(--accent);transform:translateY(-2px)}
@@ -163,14 +168,18 @@
       <button class="formSubmit" type="submit">Send inquiry <span>→</span></button>
       <p class="formStatus" id="inquiryStatus"></p>
     </form>
+    <div class="formAltAction">
+      <span>Prefer to talk it through first?</span>
+      <a href="https://calendar.app.google/s2wgUKAK6tzu4t7LA" target="_blank" rel="noopener">Book a meeting <span>↗</span></a>
+    </div>
   </div>
 </div>
 <iframe name="hidden_inquiry_frame" id="hiddenInquiryFrame" style="display:none"></iframe>
 
-<!-- Floating booking button -->
-<a class="bookFloat" href="https://calendar.app.google/s2wgUKAK6tzu4t7LA" target="_blank" rel="noopener">
-  <span>📅</span> Book a meeting
-</a>
+<!-- Floating inquiry button -->
+<button class="bookFloat" type="button" onclick="openInquiry()">
+  <span>✎</span> Project inquiry
+</button>
 
 <script>
 // Each project: [image, category, title, number, short writeup]
