@@ -367,11 +367,10 @@ function buildWorkFromRows(rows){
   // marked "Draft" is treated as published, so a blank status still shows.
   groups=groups.filter(g=>g.status.trim().toLowerCase()!=='draft');
 
-  // Reversed on purpose: add new projects to the BOTTOM of the sheet (the
-  // natural, easy thing to do) and they'll automatically appear FIRST on the
-  // site — both as the leading card in their category's swipe row, and (if
-  // it's a newly-introduced category) as the first category section overall.
-  groups.reverse();
+  // Display order matches sheet row order exactly (no reversal). To make a
+  // new project appear FIRST on the site, insert its rows near the TOP of
+  // the sheet (right after the header row) rather than at the bottom —
+  // that way existing projects stay in their current order, untouched.
 
   return groups.map((g,idx)=>{
     const heroes=g.photos.filter(p=>p.isHero);
