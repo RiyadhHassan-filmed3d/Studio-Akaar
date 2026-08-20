@@ -115,6 +115,12 @@
 .bookFloat span{font-size:13px}
 @media(max-width:800px){.bookFloat{left:16px;bottom:16px;padding:12px 18px;font-size:10px}}
 
+/* Trade & vendor CTA strip (contractors, subs, suppliers) */
+.tradeStrip{border-top:1px solid var(--line);padding:22px 8vw;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:12px;color:#777}
+.tradeStrip strong{color:#111;font-weight:500}
+.tradeStrip a{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid currentColor;padding-bottom:4px;white-space:nowrap}
+@media(max-width:800px){.tradeStrip{padding:20px 7vw;flex-direction:column;align-items:flex-start}}
+
 /* Desktop only: mouse hover reveals color. Touch devices never get this rule at all. */
 @media(hover:hover) and (pointer:fine){
   .hero:hover .heroImage img{filter:grayscale(.15);transform:scale(1.025)}
@@ -149,13 +155,15 @@
 
 <section class="statement"><div class="statementMark">"</div><p>Architecture is not only about visual expression — it is about performance, functionality, and the way people experience space daily.</p><span>— Studio Akaar</span></section>
 
-<section class="services" id="services"><div class="sectionNo">02 / Services</div><div class="serviceIntro"><p class="eyebrow">What we do</p><h2>From first idea<br>to <span>real space.</span></h2><p>From design consultancy to construction support, our team helps projects work out — bringing concept, function and detail into one coherent direction.</p></div><div class="serviceList" id="serviceList"></div>
-<noscript><ul><li>Architecture</li><li>Interior Design</li><li>Landscape Design</li><li>Brand &amp; Spatial Guidelines</li><li>Design Consultancy</li><li>Project Support</li></ul></noscript>
+<section class="services" id="services"><div class="sectionNo">02 / Services</div><div class="serviceIntro"><p class="eyebrow">What we do</p><h2>From first idea<br>to <span>real space.</span></h2><p>We stay with a project end to end — from hand-drawn concept and CAD documentation, through 3D modeling, rendering and BOQ preparation, to on-site construction supervision and handover.</p></div><div class="serviceList" id="serviceList"></div>
+<noscript><ul><li>Architecture</li><li>Interior Design</li><li>Landscape Design</li><li>3D Modeling &amp; Rendering</li><li>BOQ &amp; Documentation</li><li>Construction Supervision</li><li>Design Consultancy</li><li>Project Handover</li></ul></noscript>
 </section>
 
 <section class="founder"><div class="founderImage"><img src="images/img-004.jpg" alt="M. Riyadh Hassan, founder and architect at Studio Akaar, Dhaka, Bangladesh" loading="lazy"></div><div class="founderCopy"><p class="eyebrow">Founder / Architect</p><h2>M. Riyadh<br><span>Hassan</span></h2><p>Architect · Interior Designer · Landscape Designer</p><blockquote>"Our goal is to design spaces that are modern yet timeless, efficient yet expressive, and always purposeful."</blockquote><a class="textLink" href="#contact">Meet the studio <span>→</span></a></div></section>
 
-<footer id="contact"><div class="footerTop"><div><p class="eyebrow">Have a project in mind?</p><h2>Let's make<br><span>space work.</span></h2><div class="formCta"><button class="textLink" type="button" onclick="openInquiry()">Open project inquiry form <span>→</span></button></div></div><a class="bigMail" href="mailto:info.akarstudio@gmail.com">info.akarstudio@gmail.com <span>↗</span></a></div><div class="footerBottom"><div><strong>Studio Akaar</strong><p>Dhaka, Bangladesh<br>+880 1790 568894</p></div><div><p class="eyebrow">Socials</p><a href="https://www.facebook.com/AkaarStudio">Facebook</a><a href="https://www.instagram.com/studioakaar">Instagram</a><a href="https://www.linkedin.com/company/studio-akaar">LinkedIn</a><a href="https://youtube.com/c/filmwd3d">YouTube</a></div><div class="copyright">© 2026 Studio Akaar<br>All rights reserved.</div></div></footer>
+<footer id="contact"><div class="footerTop"><div><p class="eyebrow">Have a project in mind?</p><h2>Let's make<br><span>space work.</span></h2><div class="formCta"><button class="textLink" type="button" onclick="openInquiry()">Open project inquiry form <span>→</span></button></div></div><a class="bigMail" href="mailto:info.akarstudio@gmail.com">info.akarstudio@gmail.com <span>↗</span></a></div>
+<div class="tradeStrip"><span><strong>Contractor, sub-contractor or supplier?</strong> We're happy to hear from trades interested in working with us on active or upcoming sites.</span><a href="mailto:info.akarstudio@gmail.com?subject=Trade%2FVendor%20Inquiry">Get in touch ↗</a></div>
+<div class="footerBottom"><div><strong>Studio Akaar</strong><p>Dhaka, Bangladesh<br>+880 1790 568894</p></div><div><p class="eyebrow">Socials</p><a href="https://www.facebook.com/AkaarStudio">Facebook</a><a href="https://www.instagram.com/studioakaar">Instagram</a><a href="https://www.linkedin.com/company/studio-akaar">LinkedIn</a><a href="https://youtube.com/c/filmwd3d">YouTube</a></div><div class="copyright">© 2026 Studio Akaar<br>All rights reserved.</div></div></footer>
 
 <!-- Project detail popup -->
 <div class="modalOverlay" id="modal" onclick="if(event.target===this)closeProject()">
@@ -208,6 +216,11 @@
         <label for="inqDetails">Your thoughts behind the project</label>
         <textarea id="inqDetails" placeholder="Location, approximate size, timeline, budget range, anything else that helps us understand the brief." required></textarea>
       </div>
+      <!-- Honeypot: invisible to real visitors, only a bot filling every field would trigger it -->
+      <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+        <label for="inqWebsite">Leave this field empty</label>
+        <input type="text" id="inqWebsite" name="website" tabindex="-1" autocomplete="off">
+      </div>
       <button class="formSubmit" type="submit">Send inquiry <span>→</span></button>
       <p class="formStatus" id="inquiryStatus"></p>
     </form>
@@ -241,7 +254,7 @@ const work=[
 ['img-109.jpg','Set Design','Set Design','11','A temporary set design translating architectural principles of framing and scale into a short-lived spatial narrative.'],
 ['img-115.jpg','Landscape Projects','Landscape & Outdoor Space','12','A landscape and outdoor space designed to mediate between built form and site, using planting and hard material in balance.']
 ];
-const services=['Architecture','Interior Design','Landscape Design','Brand & Spatial Guidelines','Design Consultancy','Project Support'];
+const services=['Architecture','Interior Design','Landscape Design','3D Modeling & Rendering','BOQ & Documentation','Construction Supervision','Design Consultancy','Project Handover'];
 const filters=['All','Building Projects','Commercial Projects','Institutional Projects','Residential Interior','Set Design','Landscape Projects'];
 let active='All';
 let scrollRevealIO=null; // must be declared before render() can ever run
@@ -325,6 +338,16 @@ document.querySelectorAll('input[name="projectType"]').forEach(r=>{
 function submitInquiry(e){
   e.preventDefault();
   const f=e.target;
+
+  // Honeypot check — bots that auto-fill every input will trip this hidden field.
+  // Real visitors never see or touch it, so we just quietly pretend it worked.
+  if(document.getElementById('inqWebsite').value.trim()!==''){
+    document.getElementById('inquiryStatus').textContent='Thanks — your inquiry has been sent. We\'ll be in touch shortly.';
+    f.reset();
+    setTimeout(closeInquiry, 2200);
+    return;
+  }
+
   const projectTypeRadio=f.querySelector('input[name="projectType"]:checked');
   if(!projectTypeRadio)return;
   const isOther=projectTypeRadio.value==='__other_option__';
