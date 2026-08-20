@@ -55,16 +55,11 @@
 .formSubmit{border:0;background:#111;color:#fff;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;padding:15px 30px;cursor:pointer;transition:background .2s;margin-top:6px}
 .formSubmit:hover{background:var(--accent)}
 .formStatus{font-size:12px;color:#777;margin-top:16px;line-height:1.6}
+.otherOption{grid-column:1/-1}
+.otherText{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;font-family:Manrope,Arial,sans-serif;font-size:14px;color:var(--ink);padding:9px 0 6px;outline:none;margin-top:12px;transition:border-color .2s,opacity .2s}
+.otherText:focus{border-color:var(--ink)}
+.otherText:disabled{opacity:.4}
 @media(max-width:560px){.formBox{padding:70px 26px 40px}.radioGrid{grid-template-columns:1fr}}
-
-/* Embedded Google Form modal */
-.gformBox{background:var(--bg);max-width:640px;width:100%;max-height:88vh;position:relative;transform:translateY(16px);transition:transform .35s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column}
-.modalOverlay.open .gformBox{transform:translateY(0)}
-.gformHead{padding:26px 30px 18px;border-bottom:1px solid var(--line)}
-.gformHead .eyebrow{margin:0}
-.gformFrame{flex:1;overflow:auto}
-.gformFrame iframe{width:100%;height:70vh;border:0;display:block}
-@media(max-width:560px){.gformFrame iframe{height:75vh}}
 
 /* Floating booking button */
 .bookFloat{position:fixed;left:24px;bottom:24px;z-index:90;background:#111;color:#fff;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:14px 22px;border-radius:30px;box-shadow:0 6px 24px rgba(0,0,0,.25);display:inline-flex;align-items:center;gap:10px;transition:transform .2s,background .2s}
@@ -130,18 +125,47 @@
   <button class="modalNav modalNext" aria-label="Next project" onclick="stepProject(1)">→</button>
 </div>
 
-<!-- Project inquiry form popup (embedded Google Form) -->
+<!-- Project inquiry form popup (custom-styled, posts silently to Google Form) -->
 <div class="modalOverlay" id="inquiryModal" onclick="if(event.target===this)closeInquiry()">
-  <div class="gformBox">
+  <div class="formBox">
     <button class="modalClose" aria-label="Close" onclick="closeInquiry()">✕</button>
-    <div class="gformHead">
-      <p class="eyebrow">Project inquiry</p>
-    </div>
-    <div class="gformFrame">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeKLpHWI_oUkzi4JHRqO1qfhVFoyCanGWHHWAxIfl1wo5Sfzw/viewform?embedded=true" title="Studio Akaar project inquiry form">Loading…</iframe>
-    </div>
+    <p class="eyebrow">Project inquiry</p>
+    <h3>Tell us about<br>your project.</h3>
+    <p class="formNote">Share a few details and we'll get back to you shortly.</p>
+    <form id="inquiryForm" onsubmit="submitInquiry(event)">
+      <div class="field">
+        <label for="inqName">Name</label>
+        <input type="text" id="inqName" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="inqPhone">Contact number</label>
+        <input type="tel" id="inqPhone" required autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="inqEmail">Email</label>
+        <input type="text" id="inqEmail" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Project type</label>
+        <div class="radioGrid">
+          <label><input type="radio" name="projectType" value="Residencial" required>Residential</label>
+          <label><input type="radio" name="projectType" value="Comemrcial">Commercial</label>
+          <label><input type="radio" name="projectType" value="Institutional">Institutional</label>
+          <label><input type="radio" name="projectType" value="Research">Research</label>
+          <label class="otherOption"><input type="radio" name="projectType" value="__other_option__" id="inqOtherRadio">Other:</label>
+        </div>
+        <input type="text" id="inqOtherText" class="otherText" placeholder="Type your project type" disabled>
+      </div>
+      <div class="field">
+        <label for="inqDetails">Your thoughts behind the project</label>
+        <textarea id="inqDetails" placeholder="Location, approximate size, timeline, budget range, anything else that helps us understand the brief." required></textarea>
+      </div>
+      <button class="formSubmit" type="submit">Send inquiry <span>→</span></button>
+      <p class="formStatus" id="inquiryStatus"></p>
+    </form>
   </div>
 </div>
+<iframe name="hidden_inquiry_frame" id="hiddenInquiryFrame" style="display:none"></iframe>
 
 <!-- Floating booking button -->
 <a class="bookFloat" href="https://calendar.app.google/s2wgUKAK6tzu4t7LA" target="_blank" rel="noopener">
@@ -218,7 +242,11 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft')stepProject(-1);
 });
 
-// Project inquiry form (embedded Google Form — submits straight to Google, no extra JS needed)
+// Project inquiry form — posts silently in the background to your Google Form,
+// so it lands in your linked Sheet with no redirect and no Google UI shown to visitors.
+const GFORM_ACTION='https://docs.google.com/forms/d/e/1FAIpQLSeKLpHWI_oUkzi4JHRqO1qfhVFoyCanGWHHWAxIfl1wo5Sfzw/formResponse';
+const GFORM_ENTRIES={name:'entry.547253464',phone:'entry.457871208',email:'entry.71544818',projectType:'entry.1824067031',details:'entry.1664469415'};
+
 function openInquiry(){
   document.getElementById('inquiryModal').classList.add('open');
   document.body.style.overflow='hidden';
@@ -231,6 +259,56 @@ document.addEventListener('keydown',e=>{
   if(!document.getElementById('inquiryModal').classList.contains('open'))return;
   if(e.key==='Escape')closeInquiry();
 });
+
+// toggle the free-text "Other" field alongside the radio group
+document.querySelectorAll('input[name="projectType"]').forEach(r=>{
+  r.addEventListener('change',()=>{
+    const otherText=document.getElementById('inqOtherText');
+    const isOther=document.getElementById('inqOtherRadio').checked;
+    otherText.disabled=!isOther;
+    if(isOther)otherText.focus();
+  });
+});
+
+function submitInquiry(e){
+  e.preventDefault();
+  const f=e.target;
+  const projectTypeRadio=f.querySelector('input[name="projectType"]:checked');
+  if(!projectTypeRadio)return;
+  const isOther=projectTypeRadio.value==='__other_option__';
+
+  const params=new URLSearchParams();
+  params.set(GFORM_ENTRIES.name, document.getElementById('inqName').value.trim());
+  params.set(GFORM_ENTRIES.phone, document.getElementById('inqPhone').value.trim());
+  params.set(GFORM_ENTRIES.email, document.getElementById('inqEmail').value.trim());
+  params.set(GFORM_ENTRIES.details, document.getElementById('inqDetails').value.trim());
+  params.set(GFORM_ENTRIES.projectType, projectTypeRadio.value);
+  if(isOther){
+    params.set(GFORM_ENTRIES.projectType+'.other_option_response', document.getElementById('inqOtherText').value.trim());
+  }
+
+  // POST into the hidden iframe so the visitor never leaves or sees Google's page
+  const iframe=document.getElementById('hiddenInquiryFrame');
+  const tempForm=document.createElement('form');
+  tempForm.action=GFORM_ACTION;
+  tempForm.method='POST';
+  tempForm.target='hidden_inquiry_frame';
+  params.forEach((value,key)=>{
+    const input=document.createElement('input');
+    input.type='hidden';
+    input.name=key;
+    input.value=value;
+    tempForm.appendChild(input);
+  });
+  document.body.appendChild(tempForm);
+  tempForm.submit();
+  document.body.removeChild(tempForm);
+
+  document.getElementById('inquiryStatus').textContent='Thanks — your inquiry has been sent. We\'ll be in touch shortly.';
+  f.reset();
+  document.getElementById('inqOtherText').disabled=true;
+  setTimeout(closeInquiry, 2200);
+}
 
 // swipe support for touch/mobile
 (function(){
