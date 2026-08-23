@@ -320,13 +320,13 @@
 //    (e.g. studio-akaar-website.vercel.app/*) so nobody else can use it.
 // 3. Paste the key below. Until you do, this page falls back to a simple
 //    message and the "Latest uploads" embed above still works with no key.
-const YT_API_KEY = '';                         // ← paste your API key here
+const AIzaSyBEs0Z8uJBPIkvDf5TXh9OF1L968UJwwCw = '';                         // ← paste your API key here
 const YT_CHANNEL_ID = 'UCZ_WILDGewUrBMpKwfVME-w'; // Studio Akaar / @riyadhfilmed3d
 
 async function loadChannelStats(){
-  if(!YT_API_KEY)return;
+  if(!AIzaSyBEs0Z8uJBPIkvDf5TXh9OF1L968UJwwCw)return;
   try{
-    const res=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${YT_CHANNEL_ID}&key=${YT_API_KEY}`);
+    const res=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${YT_CHANNEL_ID}&key=${AIzaSyBEs0Z8uJBPIkvDf5TXh9OF1L968UJwwCw}`);
     const data=await res.json();
     const stats=data.items&&data.items[0]&&data.items[0].statistics;
     if(!stats)return;
@@ -345,12 +345,12 @@ async function loadPlaylists(){
   const grid=document.getElementById('playlistGrid');
   const note=document.getElementById('playlistsNote');
 
-  if(!YT_API_KEY){
+  if(!AIzaSyBEs0Z8uJBPIkvDf5TXh9OF1L968UJwwCw){
     grid.innerHTML='';
     grid.insertAdjacentHTML('beforebegin',`
       <p class="playlistsEmpty">
         The playlist library isn't connected yet. Add a YouTube Data API key to
-        <code>YT_API_KEY</code> near the bottom of this page and it will list every
+        <code>AIzaSyBEs0Z8uJBPIkvDf5TXh9OF1L968UJwwCw</code> near the bottom of this page and it will list every
         playlist from the channel automatically, with thumbnails and video counts.
         In the meantime, browse everything via the embed below or
         <a href="https://www.youtube.com/@riyadhfilmed3d" target="_blank" rel="noopener" style="text-decoration:underline">on YouTube directly ↗</a>.
@@ -362,7 +362,7 @@ async function loadPlaylists(){
   try{
     let items=[],pageToken='';
     do{
-      const res=await fetch(`https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&channelId=${YT_CHANNEL_ID}&maxResults=50&pageToken=${pageToken}&key=${YT_API_KEY}`);
+      const res=await fetch(`https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&channelId=${YT_CHANNEL_ID}&maxResults=50&pageToken=${pageToken}&key=${AIzaSyBEs0Z8uJBPIkvDf5TXh9OF1L968UJwwCw}`);
       if(!res.ok)throw new Error('playlists fetch failed');
       const data=await res.json();
       items=items.concat(data.items||[]);
