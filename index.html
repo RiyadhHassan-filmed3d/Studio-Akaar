@@ -788,6 +788,41 @@ function parseCSV(text){
   return rows;
 }
 
+// ── READABLE PROJECT LINKS ──────────────────────────────────────────────
+// "Chairman's Residence" -> "chairmans-residence"
+function slugify(s){
+  return (s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/['’`]/g,'').replace(/&/g,' and ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+}
+// Gives every project a unique link name built from its title.
+// If two projects share a title, the category is added: chairmans-residence-residential-interior
+function assignSlugs(list){
+  const counts={};
+  list.forEach(p=>{p.baseSlug=slugify(p.title);counts[p.baseSlug]=(counts[p.baseSlug]||0)+1;});
+  const used={};
+  list.forEach(p=>{
+    let s=p.baseSlug||('project-'+p.num);
+    if(counts[p.baseSlug]>1)s+='-'+slugify(p.category);
+    let finalSlug=s,i=2;
+    while(used[finalSlug]){finalSlug=s+'-'+i;i++;}
+    used[finalSlug]=true;
+    p.slug=finalSlug;
+  });
+}
+// Finds the project named in the address bar. Also still understands old links like #project-19.
+function findProjectByHash(){
+  let h='';
+  try{h=decodeURIComponent(location.hash.replace(/^#/,'')).toLowerCase();}catch(e){return null;}
+  if(!h)return null;
+  const legacy=h.match(/^project-(\d+)$/);
+  if(legacy){const hit=work.find(p=>p.num===legacy[1]);if(hit)return hit;}
+  return work.find(p=>p.slug===h)||work.find(p=>p.baseSlug===h)||null;
+}
+// Removes "index.html" from the address so links read thestudioakaar.com/#name
+function cleanPath(){
+  return location.protocol.indexOf('http')===0?location.pathname.replace(/index\.html$/,''):location.pathname;
+}
+
 function buildWorkFromRows(rows){
   if(!rows.length)return[];
   const header=rows[0].map(h=>h.trim().toLowerCase());
@@ -824,7 +859,7 @@ function buildWorkFromRows(rows){
 
   groups=groups.filter(g=>g.status.trim().toLowerCase()!=='draft');
 
-  return groups.map((g,idx)=>{
+  const projects=groups.map((g,idx)=>{
     const heroes=g.photos.filter(p=>p.isHero);
     const heroFile=heroes.length?heroes[0].filename:g.photos[0].filename;
     const rest=g.photos.map(p=>p.filename).filter(f=>f!==heroFile);
@@ -836,6 +871,8 @@ function buildWorkFromRows(rows){
       num:String(idx+1).padStart(2,'0')
     };
   });
+  assignSlugs(projects);
+  return projects;
 }
 
 async function loadProjects(){
@@ -860,11 +897,8 @@ async function loadProjects(){
       :'No published projects yet.';
     render();
 
-    const hashMatch=location.hash.match(/^#project-(.+)$/);
-    if(hashMatch){
-      const targetNum=hashMatch[1];
-      if(work.some(p=>p.num===targetNum))openProject(targetNum);
-    }
+    const target=findProjectByHash();
+    if(target)openProject(target.num);
   }catch(err){
     grid.innerHTML='<p style="color:#999;font-size:13px">Couldn\'t load the latest projects right now — please check back shortly.</p>';
     console.error('Project load error:',err);
@@ -945,8 +979,8 @@ function showModalProject(){
   document.getElementById('modalMeta').style.display=metaParts.length?'block':'none';
   document.getElementById('modalCounter').textContent=(modalIndex+1)+' / '+modalList.length;
 
-  currentShareUrl=location.origin+location.pathname+'#project-'+p.num;
-  history.replaceState(null,'','#project-'+p.num);
+  currentShareUrl=location.origin+cleanPath()+'#'+p.slug;
+  history.replaceState(null,'',cleanPath()+location.search+'#'+p.slug);
   document.getElementById('shareWhatsapp').href='https://wa.me/?text='+encodeURIComponent(p.title+' — Studio Akaar\n'+currentShareUrl);
   document.getElementById('shareFacebook').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(currentShareUrl);
 
