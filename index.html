@@ -67,55 +67,170 @@
 </script>
 
 <style>
-:root{color-scheme:light dark;--bg:#f5f5f2;--ink:#111;--muted:#777;--line:#d8d8d2;--accent:#d8a300}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,Arial,sans-serif;font-weight:400;transition:background-color .35s ease,color .35s ease}a{text-decoration:none;color:inherit}button{font:inherit}.nav{height:78px;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.12);position:fixed;top:0;left:0;right:0;z-index:50;color:#fff;background:rgba(15,15,15,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.brand{display:flex;align-items:center;gap:9px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}.brand img{display:block;width:auto;height:42px;max-width:210px;object-fit:contain}.brand span{font-family:Georgia,serif;font-size:19px}.brand i{display:block;width:5px;height:5px;border-radius:50%;background:#e0aa19}.brand b{font-weight:500}.navlinks{display:flex;gap:32px;font-size:12px;text-transform:uppercase;letter-spacing:.12em}.navlinks a{opacity:.85;transition:.2s}.navlinks a:hover{opacity:1}.menubtn{display:none;background:none;border:0}.hero{height:100vh;min-height:700px;position:relative;background:#111;color:#fff;overflow:hidden}.heroImage{position:absolute;inset:0}.heroImage img{width:100%;height:100%;object-fit:cover;object-position:center 8%;filter:grayscale(1);transform:scale(1.01);transition:filter .7s,transform .9s}.heroOverlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.12) 70%),linear-gradient(0deg,rgba(0,0,0,.5),transparent 55%)}.heroText{position:absolute;left:8vw;bottom:14vh;max-width:680px}.eyebrow{font-family:'DM Mono',monospace;text-transform:uppercase;font-size:10px;letter-spacing:.16em;margin:0 0 22px}.hero h1{font-size:clamp(64px,9vw,140px);line-height:.84;font-weight:300;letter-spacing:-.06em;margin:0}.hero h1 em,.hero h2 span,.workHead h2 span,.serviceIntro h2 span,.founder h2 span,.footerTop h2 span{font-family:Georgia,serif;font-style:italic;font-weight:400}.lead{font-size:16px;line-height:1.7;max-width:510px;margin:35px 0}.arrowLink,.textLink{font-size:12px;text-transform:uppercase;letter-spacing:.13em;border-bottom:1px solid currentColor;padding-bottom:8px;display:inline-flex;gap:35px}.arrowLink span,.textLink span{font-size:18px;line-height:10px}.heroMeta{position:absolute;left:8vw;right:4vw;bottom:28px;display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em}.intro{padding:160px 8vw;display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:7vw;align-items:center}.sectionNo{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#888;align-self:start}.introCopy h2,.workHead h2,.serviceIntro h2,.founder h2,.footerTop h2{font-size:clamp(40px,5vw,74px);line-height:.98;letter-spacing:-.05em;font-weight:300;margin:0 0 30px}.introCopy>p:not(.eyebrow),.serviceIntro>p:not(.eyebrow){font-size:15px;line-height:1.85;color:#555;max-width:520px}.introImage{height:620px;overflow:hidden}.introImage img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:.7s}.textLink{margin-top:25px}
-.ratio{position:relative;padding-top:56.25%;background:#000}
-.ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+/* ══ ALIGNMENT SYSTEM ══
+   --gutter : ONE left/right margin used by every section, the nav, the hero and the footer,
+              so every left edge and right edge on the page lines up. Content is capped at 1440px.
+   --sy     : ONE vertical spacing unit used above/below every section. */
+:root{color-scheme:light dark;--bg:#f5f5f2;--ink:#111;--muted:#777;--line:#d8d8d2;--accent:#d8a300;--gutter:max(8vw,calc((100vw - 1440px)/2));--sy:clamp(90px,10vw,150px)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,Arial,sans-serif;font-weight:400;transition:background-color .35s ease,color .35s ease}
+a{text-decoration:none;color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 
-/* ── KNOWLEDGE SECTION (replaces old videos) ── */
-.knowledge{padding:150px 4vw 100px;border-top:1px solid var(--line)}
-.knowledgeHead{display:grid;grid-template-columns:1fr 1fr;gap:60px;padding:0 0 60px}
-.knowledgeHead h2{font-size:clamp(40px,5vw,74px);line-height:.98;letter-spacing:-.05em;font-weight:300;margin:0}
-.knowledgeHead .knowledgeDesc{display:flex;flex-direction:column;justify-content:end}
-.knowledgeHead .knowledgeDesc p{font-size:14px;line-height:1.8;color:#666;margin:0 0 12px}
-.knowledgeHead .knowledgeDesc .tag{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#999;border:1px solid var(--line);padding:4px 12px;border-radius:20px;margin-right:6px}
-.knowledgeGrid{display:grid;grid-template-columns:1fr 1fr;gap:60px 40px}
-.knowledgeItem{border-top:1px solid var(--line);padding-top:28px}
-.knowledgeItem .label{font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.1em;color:#999;display:block;margin-bottom:10px}
-.knowledgeItem h3{font-size:18px;font-weight:400;margin:0 0 10px;letter-spacing:-.02em}
-.knowledgeItem p{font-size:13px;line-height:1.7;color:#666;margin:0 0 18px}
-.knowledgeItem .videoWrap{border-radius:6px;overflow:hidden;background:#111;margin-top:10px}
-.knowledgeItem .videoWrap .ratio{padding-top:56.25%}
-.knowledgeItem .meta{font-size:11px;color:#999;display:flex;gap:16px;margin-top:14px}
-.knowledgeItem .meta span{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+/* NAV */
+.nav{height:78px;padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.12);position:fixed;top:0;left:0;right:0;z-index:50;color:#fff;background:rgba(15,15,15,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.brand{display:flex;align-items:center;gap:9px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.brand img{display:block;width:auto;height:42px;max-width:210px;object-fit:contain}
+.navlinks{display:flex;gap:32px;font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+.navlinks a{opacity:.85;transition:.2s}
+.navlinks a:hover{opacity:1}
+.menubtn{display:none}
 
-/* ── PROJECT JOURNAL (replaces old Facebook) ── */
-.journal{padding:0 4vw 150px}
-.journalHead{display:grid;grid-template-columns:1fr 1fr;gap:60px;padding:0 0 50px}
-.journalHead h2{font-size:clamp(40px,5vw,74px);line-height:.98;letter-spacing:-.05em;font-weight:300;margin:0}
-.journalHead .journalDesc{display:flex;flex-direction:column;justify-content:end}
-.journalHead .journalDesc p{font-size:14px;line-height:1.8;color:#666;margin:0 0 12px}
-.journalGrid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-.journalCard{background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--line);transition:.3s}
-.journalCard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.06)}
-.journalCard .fbEmbed{padding:20px 20px 0;min-height:380px}
-.journalCard .fbEmbed .fb-page{max-width:100%}
-.journalCard .cardFooter{padding:16px 20px 20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.journalCard .cardFooter span{font-size:11px;color:#777}
-.journalCard .cardFooter a{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid currentColor;padding-bottom:4px}
-.journalNote{grid-column:1/-1;text-align:center;padding:20px 0 0;font-size:13px;color:#999;line-height:1.7}
+/* SHARED TYPE */
+.eyebrow{font-family:'DM Mono',monospace;text-transform:uppercase;font-size:10px;letter-spacing:.16em;margin:0 0 22px}
+.label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#999;display:block;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#999;border:1px solid var(--line);padding:4px 12px;border-radius:20px}
+.hero h1 em,.workHead h2 span,.serviceIntro h2 span,.founder h2 span,.footerTop h2 span,.introCopy h2 span,.knowledgeHead h2 span,.journalHead h2 span,.storyTitle span{font-family:Georgia,serif;font-style:italic;font-weight:400}
+.introCopy h2,.workHead h2,.serviceIntro h2,.founder h2,.footerTop h2,.knowledgeHead h2,.journalHead h2{font-size:clamp(40px,5vw,74px);line-height:.98;letter-spacing:-.05em;font-weight:300;margin:0 0 30px}
+.arrowLink,.textLink{font-size:12px;text-transform:uppercase;letter-spacing:.13em;border-bottom:1px solid currentColor;padding-bottom:8px;display:inline-flex;gap:35px}
+.arrowLink span,.textLink span{font-size:18px;line-height:10px}
+.textLink{margin-top:25px}
 
-/* ── REST OF ORIGINAL STYLES (unchanged) ── */
-.work{padding:80px 4vw 150px;border-top:1px solid var(--line)}.workHead{display:flex;justify-content:space-between;align-items:end;padding:0 4vw 70px}.workNote{max-width:320px;color:#777;font-size:12px;line-height:1.7}.filters{padding:0 4vw 35px;display:flex;gap:18px;overflow:auto;white-space:nowrap}.filters button{border:0;background:none;color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:0;cursor:pointer}.filters button.active{color:#111;border-bottom:1px solid #111;padding-bottom:5px}.grid{display:block}
+/* HERO */
+.hero{height:100vh;min-height:700px;position:relative;background:#111;color:#fff;overflow:hidden}
+.heroImage{position:absolute;inset:0}
+.heroImage img{width:100%;height:100%;object-fit:cover;object-position:center 8%;filter:grayscale(1);transform:scale(1.01);transition:filter .7s,transform .9s}
+.heroOverlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.12) 70%),linear-gradient(0deg,rgba(0,0,0,.5),transparent 55%)}
+.heroText{position:absolute;left:var(--gutter);bottom:14vh;max-width:680px}
+.hero h1{font-size:clamp(64px,9vw,140px);line-height:.84;font-weight:300;letter-spacing:-.06em;margin:0}
+.lead{font-size:16px;line-height:1.7;max-width:510px;margin:35px 0}
+.heroMeta{position:absolute;left:var(--gutter);right:var(--gutter);bottom:28px;display:grid;grid-template-columns:1fr auto 1fr;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em}
+.heroMeta span:nth-child(1){text-align:left}
+.heroMeta span:nth-child(2){text-align:center}
+.heroMeta span:nth-child(3){text-align:right}
+
+/* STUDIO / INTRO */
+.intro{padding:var(--sy) var(--gutter);display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:7vw;align-items:center}
+.sectionNo{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#888;align-self:start}
+.introCopy>p:not(.eyebrow),.serviceIntro>p:not(.eyebrow){font-size:15px;line-height:1.85;color:#555;max-width:520px;margin:0}
+.introImage{height:620px;overflow:hidden}
+.introImage img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:.7s}
+
+/* WORK */
+.work{padding:var(--sy) var(--gutter);border-top:1px solid var(--line)}
+.workHead{display:flex;justify-content:space-between;align-items:end;gap:40px;padding-bottom:70px}
+.workHead h2{margin:0}
+.workNote{max-width:320px;color:#777;font-size:12px;line-height:1.7;margin:0}
+.filters{display:flex;gap:18px;overflow:auto;white-space:nowrap;padding-bottom:35px}
+.filters button{color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.1em}
+.filters button.active{color:#111;border-bottom:1px solid #111;padding-bottom:5px}
+.grid{display:block}
+.grid>p{margin:0}
 .catGroup{margin-bottom:110px}
 .catGroup:last-child{margin-bottom:0}
-.catHead{display:flex;align-items:baseline;gap:16px;padding:0 4vw;margin-bottom:40px}
+.catHead{display:flex;align-items:baseline;gap:16px;margin-bottom:40px}
 .catHead .catNo{font-family:'DM Mono',monospace;font-size:9px;color:#999}
 .catHead h3{font-size:clamp(22px,2.6vw,32px);font-weight:300;letter-spacing:-.04em;margin:0}
 .catHead .catCount{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#999;white-space:nowrap}
-.catRow{display:grid;grid-template-columns:repeat(12,1fr);gap:70px 20px;padding:0 4vw}.project{grid-column:span 4;cursor:pointer}.project.p1{margin-top:100px}.project:focus-visible{outline:2px solid var(--accent);outline-offset:6px}.projectImg{aspect-ratio:4/5;overflow:hidden;position:relative;background:#ddd}.project:nth-child(3n) .projectImg{aspect-ratio:1/1}.project:nth-child(4n) .projectImg{aspect-ratio:5/4}.projectImg img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter .55s ease,transform .7s cubic-bezier(.2,.7,.2,1)}.projectNum,.projectArrow{position:absolute;top:15px;font-family:'DM Mono',monospace;font-size:9px;color:#fff;text-shadow:0 1px 5px #000}.projectNum{left:15px}.projectArrow{right:15px;font-size:15px;opacity:0;transform:translate(-5px,5px);transition:.3s}
-.photoCount{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.6);color:#fff;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.03em;padding:5px 9px;border-radius:20px;display:flex;align-items:center;gap:5px}.projectInfo{padding-top:15px;display:flex;justify-content:space-between;gap:15px;align-items:start}.projectInfo span{font-family:'DM Mono',monospace;text-transform:uppercase;font-size:8px;letter-spacing:.08em;color:#888}.projectInfo strong{font-size:12px;font-weight:500;text-align:right}.statement{padding:150px 16vw;background:#111;color:#f5f5f2;min-height:600px;display:flex;flex-direction:column;justify-content:center}.statementMark{font-family:Georgia,serif;font-size:100px;line-height:.3;color:var(--accent)}.statement p{font-family:Georgia,serif;font-size:clamp(34px,4.7vw,70px);line-height:1.08;letter-spacing:-.04em;max-width:1000px}.statement span{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#aaa}.services{padding:150px 8vw;display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:7vw}.serviceIntro p:not(.eyebrow){color:#666;line-height:1.8;font-size:14px}.serviceList{grid-column:2/4;border-top:1px solid var(--line)}.serviceList div{display:grid;grid-template-columns:45px 1fr 30px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);transition:.25s}.serviceList div:hover{padding-left:10px}.serviceList span{font-family:'DM Mono',monospace;font-size:9px;color:#999}.serviceList strong{font-size:15px;font-weight:400}.serviceList b{font-weight:400}.founder{display:grid;grid-template-columns:1fr 1fr;min-height:700px;background:#e9e9e4}.founderImage{overflow:hidden}.founderImage img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:.7s}.founderCopy{padding:100px 10vw;display:flex;flex-direction:column;justify-content:center}.founderCopy>p:not(.eyebrow){color:#777;font-size:11px;text-transform:uppercase;letter-spacing:.1em}.founder blockquote{font-family:Georgia,serif;font-size:22px;line-height:1.45;margin:55px 0 20px;max-width:550px}.footerTop{padding:160px 8vw;display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line)}.bigMail{font-family:'DM Mono',monospace;font-size:12px;border-bottom:1px solid #111;padding-bottom:12px}.bigMail span{margin-left:50px;font-size:18px}.formCta{margin-top:28px}.formCta a{font-family:'DM Mono',monospace}.footerBottom{padding:55px 8vw;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;font-size:11px;color:#777}.footerBottom strong{color:#111;font-size:13px}.footerBottom p{line-height:1.7}.footerBottom a{display:block;margin:7px 0}.copyright{grid-column:1/-1;text-align:right;font-family:'DM Mono',monospace;font-size:9px;line-height:1.8;margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+/* Strict 3-column grid: every card has the same width, the same top edge and the same image shape */
+.catRow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:64px 24px;align-items:start}
+.project{cursor:pointer;min-width:0}
+.project:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+.projectImg{aspect-ratio:4/5;overflow:hidden;position:relative;background:#ddd}
+.projectImg img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1);transition:filter .55s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.projectNum,.projectArrow{position:absolute;top:15px;font-family:'DM Mono',monospace;font-size:9px;color:#fff;text-shadow:0 1px 5px #000}
+.projectNum{left:15px}
+.projectArrow{right:15px;font-size:15px;opacity:0;transform:translate(-5px,5px);transition:.3s}
+.photoCount{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.6);color:#fff;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.03em;padding:5px 9px;border-radius:20px;display:flex;align-items:center;gap:5px}
+.projectInfo{padding-top:15px;display:flex;justify-content:space-between;gap:15px;align-items:baseline}
+.projectInfo span{font-family:'DM Mono',monospace;text-transform:uppercase;font-size:8px;letter-spacing:.08em;color:#888}
+.projectInfo strong{font-size:12px;font-weight:500;text-align:right}
 
-/* Modal (unchanged) */
+/* STATEMENT */
+.statement{padding:var(--sy) var(--gutter);background:#111;color:#f5f5f2;min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.statementMark{font-family:Georgia,serif;font-size:100px;line-height:.3;color:var(--accent)}
+.statement p{font-family:Georgia,serif;font-size:clamp(34px,4.7vw,70px);line-height:1.08;letter-spacing:-.04em;max-width:1000px;margin:40px 0}
+.statement span{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#aaa}
+
+/* KNOWLEDGE */
+.knowledge{padding:var(--sy) var(--gutter) 80px;border-top:1px solid var(--line)}
+.knowledgeHead,.journalHead{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;padding-bottom:60px}
+.knowledgeHead h2,.journalHead h2{margin:0}
+.knowledgeDesc p,.journalDesc p{font-size:14px;line-height:1.8;color:#666;margin:0 0 16px}
+.knowledgeDesc p:last-child,.journalDesc p:last-child{margin-bottom:0}
+/* Two cards share the same 5 rows (label, title, text, media, footer) so every row lines up across cards */
+.knowledgeGrid{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+.knowledgeItem{border-top:1px solid var(--line);padding-top:28px;display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:0}
+.knowledgeItem .label{margin-bottom:10px}
+.knowledgeItem h3{font-size:18px;font-weight:400;margin:0 0 10px;letter-spacing:-.02em}
+.knowledgeItem>p{font-size:13px;line-height:1.7;color:#666;margin:0 0 18px}
+.media{border-radius:6px;overflow:hidden;background:#111;align-self:start;width:100%}
+.ratio{position:relative;padding-top:56.25%;background:#000}
+.ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.factPanel{aspect-ratio:16/9;background:#e9e9e4;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:0 8%;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#555}
+.factPanel div{display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.factPanel div:last-child{border-bottom:0;padding-bottom:0}
+.itemFoot{padding-top:14px}
+.meta{font-size:11px;color:#999;display:flex;gap:16px}
+.meta span{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+.itemFoot .textLink{margin-top:18px}
+
+/* JOURNAL */
+.journal{padding:0 var(--gutter) var(--sy)}
+.journalGrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:stretch}
+.journalCard{background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--line);transition:.3s;display:flex;flex-direction:column}
+.journalCard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.06)}
+.fbEmbed{padding:20px 20px 0;min-height:380px;flex:1}
+.fbEmbed .fb-page{max-width:100%}
+.cardFooter{padding:16px 20px 20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:auto}
+.cardFooter span{font-size:11px;color:#777}
+.cardFooter a{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid currentColor;padding-bottom:4px}
+.journalCard.story{background:var(--bg);padding:40px;justify-content:center;align-items:flex-start}
+.storyTitle{font-size:clamp(22px,2.6vw,30px);font-weight:300;letter-spacing:-.03em;margin:0 0 16px}
+.story p{font-size:14px;line-height:1.8;color:#666;margin:0 0 20px}
+.story .textLink{margin-top:28px}
+.journalNote{padding-top:32px;font-size:13px;color:#999;line-height:1.7}
+.journalNote a{text-decoration:underline;color:var(--ink)}
+
+/* SERVICES */
+.services{padding:var(--sy) var(--gutter);display:grid;grid-template-columns:1fr 1.2fr 1.4fr;gap:7vw;align-items:start}
+.serviceIntro h2{margin-bottom:30px}
+.serviceList{border-top:1px solid var(--line)}
+.serviceList div{display:grid;grid-template-columns:45px 1fr 30px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);transition:.25s}
+.serviceList div:hover{padding-left:10px}
+.serviceList span{font-family:'DM Mono',monospace;font-size:9px;color:#999}
+.serviceList strong{font-size:15px;font-weight:400}
+.serviceList b{font-weight:400;text-align:right}
+
+/* FOUNDER */
+.founder{display:grid;grid-template-columns:1fr 1fr;min-height:700px;background:#e9e9e4}
+.founderImage{overflow:hidden}
+.founderImage img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1);transition:.7s}
+.founderCopy{padding:100px var(--gutter) 100px 6vw;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.founder h2{margin-bottom:24px}
+.founderCopy>p:not(.eyebrow){color:#777;font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin:0}
+.founder blockquote{font-family:Georgia,serif;font-size:22px;line-height:1.45;margin:55px 0 20px;max-width:550px}
+
+/* FOOTER */
+.footerTop{padding:var(--sy) var(--gutter);display:flex;justify-content:space-between;align-items:end;gap:40px;border-bottom:1px solid var(--line)}
+.footerTop h2{margin-bottom:0}
+.bigMail{font-family:'DM Mono',monospace;font-size:12px;border-bottom:1px solid #111;padding-bottom:12px;white-space:nowrap}
+.bigMail span{margin-left:50px;font-size:18px}
+.formCta{margin-top:28px}
+.formCta .textLink{margin-top:0}
+.tradeStrip{border-bottom:1px solid var(--line);padding:22px var(--gutter);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:12px;color:#777}
+.tradeStrip strong{color:#111;font-weight:500}
+.tradeStrip a{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid currentColor;padding-bottom:4px;white-space:nowrap}
+.footerBottom{padding:55px var(--gutter);display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;align-items:start;font-size:11px;color:#777}
+.footerBottom strong{color:#111;font-size:13px;display:block;margin-bottom:8px}
+.footerBottom p{line-height:1.7;margin:0}
+.footerBottom .eyebrow{margin-bottom:22px}
+.footerBottom a{display:block;margin:0 0 12px}
+.copyright{grid-column:1/-1;text-align:right;font-family:'DM Mono',monospace;font-size:9px;line-height:1.8;margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+
+/* MODAL */
 .modalOverlay{position:fixed;inset:0;background:rgba(10,10,10,.82);z-index:100;display:flex;align-items:center;justify-content:center;padding:5vw;opacity:0;pointer-events:none;transition:opacity .3s ease}
 .modalOverlay.open{opacity:1;pointer-events:auto}
 .modalBox{background:var(--bg);max-width:920px;width:100%;max-height:86vh;overflow:auto;display:grid;grid-template-columns:1.1fr 1fr;position:relative;transform:translateY(16px);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
@@ -146,9 +261,8 @@
 .modalNav:hover{background:rgba(0,0,0,.7)}
 .modalPrev{left:3vw}.modalNext{right:3vw}
 .modalCounter{position:absolute;bottom:18px;right:24px;font-family:'DM Mono',monospace;font-size:10px;color:#999}
-@media(max-width:800px){.modalBox{grid-template-columns:1fr;max-height:92vh}.modalImg{height:46vh;max-height:400px}.modalInfo{padding:34px 28px}.modalNav{width:38px;height:38px;font-size:16px}.modalPrev{left:2vw}.modalNext{right:2vw}}
 
-/* Inquiry form (unchanged) */
+/* INQUIRY FORM */
 .formBox{background:var(--bg);max-width:560px;width:100%;max-height:88vh;overflow:auto;position:relative;padding:56px 46px;transform:translateY(16px);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
 .modalOverlay.open .formBox{transform:translateY(0)}
 .formBox .eyebrow{margin-bottom:14px}
@@ -170,22 +284,15 @@
 .otherText{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;font-family:Manrope,Arial,sans-serif;font-size:14px;color:var(--ink);padding:9px 0 6px;outline:none;margin-top:12px;transition:border-color .2s,opacity .2s}
 .otherText:focus{border-color:var(--ink)}
 .otherText:disabled{opacity:.4}
-@media(max-width:560px){.formBox{padding:70px 26px 40px}.radioGrid{grid-template-columns:1fr}}
-
 .formAltAction{margin-top:34px;padding-top:26px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .formAltAction span{font-size:12px;color:#777}
 .formAltAction a{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid currentColor;padding-bottom:4px;display:inline-flex;gap:8px;white-space:nowrap}
 .formAltAction a span{font-size:13px;color:inherit}
 
+/* FLOATING WHATSAPP */
 .waFloat{position:fixed;left:24px;bottom:24px;z-index:90;background:#111;color:#fff;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:14px 22px 14px 16px;border-radius:30px;box-shadow:0 6px 24px rgba(0,0,0,.25);display:inline-flex;align-items:center;gap:10px;transition:transform .2s,background .2s}
 .waFloat:hover{background:var(--accent);transform:translateY(-2px)}
 .waFloat svg{display:block;flex:none}
-@media(max-width:800px){.waFloat{left:16px;bottom:16px;padding:12px 16px 12px 12px;font-size:10px}}
-
-.tradeStrip{border-top:1px solid var(--line);padding:22px 8vw;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:12px;color:#777}
-.tradeStrip strong{color:#111;font-weight:500}
-.tradeStrip a{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid currentColor;padding-bottom:4px;white-space:nowrap}
-@media(max-width:800px){.tradeStrip{padding:20px 7vw;flex-direction:column;align-items:flex-start}}
 
 /* Desktop hover reveals */
 @media(hover:hover) and (pointer:fine){
@@ -199,32 +306,74 @@
   .heroImage.seen img,.introImage.seen img,.founderImage.seen img,.projectImg.seen img{filter:grayscale(0)}
 }
 
-/* ── RESPONSIVE ── */
-@media(max-width:800px){
-  .nav{height:66px}.brand img{height:32px}.navlinks{display:none}.navlinks.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#111;padding:30px 8vw;flex-direction:column;gap:22px}.menubtn{display:block}.menubtn span{display:block;width:24px;height:1px;background:#fff;margin:6px}.hero{min-height:650px}.heroImage img{object-position:center center}.heroText{left:7vw;bottom:13vh}.heroMeta{left:7vw;right:7vw}.heroMeta span:nth-child(2){display:none}.intro,.services{display:block;padding:100px 7vw}.intro .sectionNo,.services .sectionNo{margin-bottom:70px}.introImage{height:430px;margin-top:60px}
-  
-  /* Knowledge responsive */
-  .knowledge{padding:100px 7vw 60px}
-  .knowledgeHead{grid-template-columns:1fr;gap:30px;padding:0 0 40px}
-  .knowledgeGrid{grid-template-columns:1fr;gap:40px}
-  
-  /* Journal responsive */
-  .journal{padding:0 7vw 100px}
-  .journalHead{grid-template-columns:1fr;gap:30px;padding:0 0 35px}
-  .journalGrid{grid-template-columns:1fr;gap:30px}
-  .journalCard .fbEmbed{min-height:320px}
+/* Tablet: 2 project columns */
+@media(max-width:1100px){
+  .catRow{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 
-  .work{padding:70px 0 100px}.workHead{display:block;padding:0 7vw 45px}.workNote{margin-top:25px}.filters{position:sticky;top:66px;z-index:20;background:var(--bg);padding:14px 7vw;border-bottom:1px solid var(--line);margin-bottom:8px}
+/* ── MOBILE ── */
+@media(max-width:800px){
+  :root{--gutter:7vw}
+  .nav{height:66px}
+  .brand img{height:32px}
+  .navlinks{display:none}
+  .navlinks.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#111;padding:30px var(--gutter);flex-direction:column;gap:22px}
+  .menubtn{display:block}
+  .menubtn span{display:block;width:24px;height:1px;background:#fff;margin:6px}
+  .hero{min-height:650px}
+  .heroImage img{object-position:center center}
+  .heroText{bottom:13vh}
+  .heroMeta{display:flex;justify-content:space-between}
+  .heroMeta span:nth-child(2){display:none}
+
+  .intro,.services{display:block}
+  .intro .sectionNo,.services .sectionNo{margin-bottom:48px}
+  .introImage{height:430px;margin-top:60px}
+
+  .knowledge{padding-bottom:60px}
+  .knowledgeHead,.journalHead{grid-template-columns:1fr;gap:30px;padding-bottom:40px}
+  .knowledgeGrid{display:block}
+  .knowledgeItem{display:block;margin-bottom:48px}
+  .knowledgeItem:last-child{margin-bottom:0}
+  .knowledgeItem .media,.knowledgeItem .factPanel{margin-top:10px}
+  .journalGrid{grid-template-columns:1fr;gap:30px}
+  .fbEmbed{min-height:320px}
+  .journalCard.story{padding:30px 28px}
+
+  .work{padding-inline:0}
+  .workHead{display:block;padding:0 var(--gutter) 45px}
+  .workNote{margin-top:25px}
+  .filters{position:sticky;top:66px;z-index:20;background:var(--bg);padding:14px var(--gutter);border-bottom:1px solid var(--line);margin-bottom:8px}
   .catGroup{margin-bottom:64px}
-  .catHead{padding:0 7vw;margin-bottom:16px;flex-wrap:wrap}
-  .catRow{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:0 7vw 8px;-ms-overflow-style:none;scrollbar-width:none}
+  .catHead{padding:0 var(--gutter);margin-bottom:16px;flex-wrap:wrap}
+  .catRow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:0 var(--gutter) 8px;scroll-padding-inline:var(--gutter);-ms-overflow-style:none;scrollbar-width:none}
   .catRow::-webkit-scrollbar{display:none}
-  .catRow .project,.catRow .project.p1{grid-column:unset;flex:0 0 80vw;margin:0;scroll-snap-align:start}
-  .catRow .projectImg,.catRow .project:nth-child(3n) .projectImg,.catRow .project:nth-child(4n) .projectImg{aspect-ratio:4/5}
+  .catRow .project{flex:0 0 80vw;scroll-snap-align:start}
   .modalThumbs{display:none}
   .imgDots{display:flex}
-  .statement{padding:100px 7vw;min-height:500px}.statement p{font-size:38px}.serviceList{margin-top:60px}.founder{display:block}.founderImage{height:430px}.founderCopy{padding:80px 7vw}.footerTop{display:block;padding:100px 7vw}.bigMail{display:inline-block;margin-top:40px;font-size:10px}.bigMail span{margin-left:20px}.footerBottom{padding:45px 7vw;grid-template-columns:1fr 1fr}.copyright{text-align:left;grid-column:1/-1;margin-top:20px}.footerTop h2{font-size:55px}
+
+  .statement{min-height:500px}
+  .statement p{font-size:38px}
+  .serviceList{margin-top:60px}
+  .founder{display:block}
+  .founderImage{height:430px}
+  .founderCopy{padding:80px var(--gutter)}
+  .footerTop{display:block}
+  .bigMail{display:inline-block;margin-top:40px;font-size:10px}
+  .bigMail span{margin-left:20px}
+  .footerTop h2{font-size:55px}
+  .tradeStrip{flex-direction:column;align-items:flex-start}
+  .footerBottom{grid-template-columns:1fr 1fr}
+  .copyright{text-align:left;margin-top:20px}
+
+  .modalBox{grid-template-columns:1fr;max-height:92vh}
+  .modalImg{height:46vh;max-height:400px}
+  .modalInfo{padding:34px 28px}
+  .modalNav{width:38px;height:38px;font-size:16px}
+  .modalPrev{left:2vw}.modalNext{right:2vw}
+  .waFloat{left:16px;bottom:16px;padding:12px 16px 12px 12px;font-size:10px}
 }
+@media(max-width:560px){.formBox{padding:70px 26px 40px}.radioGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -244,7 +393,7 @@
     <a href="#services">Services</a>
     <a href="#contact">Contact</a>
   </nav>
-  <button class="menubtn" id="menubtn"><span></span><span></span></button>
+  <button class="menubtn" id="menubtn" aria-label="Menu"><span></span><span></span></button>
 </header>
 
 <!-- ── HERO ── -->
@@ -328,7 +477,7 @@
   <span>— Studio Akaar</span>
 </section>
 
-<!-- ── KNOWLEDGE (replaces old videos section) ── -->
+<!-- ── KNOWLEDGE ── -->
 <section class="knowledge" id="knowledge">
   <div class="knowledgeHead">
     <div>
@@ -337,49 +486,56 @@
     </div>
     <div class="knowledgeDesc">
       <p>Every design decision responds to climate, materiality, budget, and human comfort. Our video library documents how these factors shape our work — from first sketch to final walkthrough.</p>
-      <div>
-        <span class="tag">Climate response</span>
-        <span class="tag">Material selection</span>
-        <span class="tag">Budget planning</span>
-        <span class="tag">Design process</span>
+      <div class="chips">
+        <span class="chip">Climate response</span>
+        <span class="chip">Material selection</span>
+        <span class="chip">Budget planning</span>
+        <span class="chip">Design process</span>
       </div>
     </div>
   </div>
 
   <div class="knowledgeGrid">
-    <!-- Item 1: Main YouTube channel -->
+    <!-- Item 1: YouTube -->
     <div class="knowledgeItem">
       <span class="label">Video series</span>
       <h3>Design deep-dives</h3>
       <p>Portfolio walkthroughs, software tutorials, and problem-solution breakdowns — practical insights for clients, students, and collaborators.</p>
-      <div class="videoWrap">
+      <div class="media">
         <div class="ratio">
           <iframe src="https://www.youtube.com/embed/videoseries?list=UUZ_WILDGewUrBMpKwfVME-w" title="Studio Akaar on YouTube" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
-      <div class="meta">
-        <span>📺 YouTube</span>
-        <span>New videos added regularly</span>
+      <div class="itemFoot">
+        <div class="meta">
+          <span>📺 YouTube</span>
+          <span>New videos added regularly</span>
+        </div>
+        <a class="textLink" href="youtube.html">View the full video library <span>→</span></a>
       </div>
-      <a class="textLink" href="youtube.html" style="margin-top:18px">View the full video library <span>→</span></a>
     </div>
 
-    <!-- Item 2: Climate & context focus -->
+    <!-- Item 2: Climate & context -->
     <div class="knowledgeItem">
       <span class="label">Design approach</span>
       <h3>Climate + context</h3>
       <p>Bangladesh's tropical climate demands thoughtful design. We analyze solar paths, wind patterns, rainfall, and cultural context to create spaces that perform as beautifully as they look.</p>
-      <div class="meta">
-        <span>🌿 Passive cooling</span>
-        <span>☀️ Solar orientation</span>
-        <span>💨 Natural ventilation</span>
+      <div class="factPanel">
+        <div><span>🌿</span>Passive cooling</div>
+        <div><span>☀️</span>Solar orientation</div>
+        <div><span>💨</span>Natural ventilation</div>
       </div>
-      <a class="textLink" href="#contact" style="margin-top:18px">Discuss your project <span>→</span></a>
+      <div class="itemFoot">
+        <div class="meta">
+          <span>🌦 Tropical climate</span>
+        </div>
+        <a class="textLink" href="#contact">Discuss your project <span>→</span></a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── PROJECT JOURNAL (replaces old Facebook section) ── -->
+<!-- ── PROJECT JOURNAL ── -->
 <section class="journal" id="journal">
   <div class="journalHead">
     <div>
@@ -395,14 +551,14 @@
     <!-- Card 1: Facebook feed -->
     <div class="journalCard">
       <div class="fbEmbed">
-        <div class="fb-page" 
-             data-href="https://www.facebook.com/AkaarStudio" 
-             data-tabs="timeline" 
-             data-width="500" 
-             data-height="420" 
-             data-small-header="false" 
-             data-adapt-container-width="true" 
-             data-hide-cover="false" 
+        <div class="fb-page"
+             data-href="https://www.facebook.com/AkaarStudio"
+             data-tabs="timeline"
+             data-width="500"
+             data-height="420"
+             data-small-header="false"
+             data-adapt-container-width="true"
+             data-hide-cover="false"
              data-show-facepile="false">
           <blockquote cite="https://www.facebook.com/AkaarStudio" class="fb-xfbml-parse-ignore">
             <a href="https://www.facebook.com/AkaarStudio">Studio Akaar</a>
@@ -416,21 +572,21 @@
     </div>
 
     <!-- Card 2: Process & values summary -->
-    <div class="journalCard" style="background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:30px 32px;border-color:var(--line)">
-      <span class="label" style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#999;display:block;margin-bottom:12px">Why we document</span>
-      <h3 style="font-size:clamp(22px,2.6vw,30px);font-weight:300;letter-spacing:-.03em;margin:0 0 16px">Every project<br>tells a <span style="font-family:Georgia,serif;font-style:italic">story.</span></h3>
-      <p style="font-size:14px;line-height:1.8;color:#666;margin:0 0 20px">We believe in transparency and shared learning. Our journal is a record of how we navigate site constraints, client aspirations, and the pursuit of design excellence — one decision at a time.</p>
-      <div style="display:flex;gap:16px;flex-wrap:wrap">
-        <span style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#999;border:1px solid var(--line);padding:4px 12px;border-radius:20px">Site visits</span>
-        <span style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#999;border:1px solid var(--line);padding:4px 12px;border-radius:20px">Material testing</span>
-        <span style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#999;border:1px solid var(--line);padding:4px 12px;border-radius:20px">Client collaboration</span>
+    <div class="journalCard story">
+      <span class="label">Why we document</span>
+      <h3 class="storyTitle">Every project<br>tells a <span>story.</span></h3>
+      <p>We believe in transparency and shared learning. Our journal is a record of how we navigate site constraints, client aspirations, and the pursuit of design excellence — one decision at a time.</p>
+      <div class="chips">
+        <span class="chip">Site visits</span>
+        <span class="chip">Material testing</span>
+        <span class="chip">Client collaboration</span>
       </div>
-      <a class="textLink" href="#contact" style="margin-top:28px">Share your project idea <span>→</span></a>
+      <a class="textLink" href="#contact">Share your project idea <span>→</span></a>
     </div>
   </div>
 
   <div class="journalNote">
-    <span>Follow our full journey on <a href="https://www.facebook.com/AkaarStudio" target="_blank" rel="noopener" style="text-decoration:underline;color:var(--ink)">Facebook</a> · <a href="https://www.instagram.com/studioakaar" target="_blank" rel="noopener" style="text-decoration:underline;color:var(--ink)">Instagram</a> · <a href="https://www.youtube.com/@riyadhfilmed3d" target="_blank" rel="noopener" style="text-decoration:underline;color:var(--ink)">YouTube</a></span>
+    Follow our full journey on <a href="https://www.facebook.com/AkaarStudio" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/studioakaar" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.youtube.com/@riyadhfilmed3d" target="_blank" rel="noopener">YouTube</a>
   </div>
 </section>
 
@@ -491,6 +647,7 @@
 
   <div class="footerBottom">
     <div>
+      <p class="eyebrow">Contact</p>
       <strong>Studio Akaar</strong>
       <p>Dhaka, Bangladesh<br>+880 1790 568894</p>
     </div>
@@ -512,7 +669,7 @@
   </div>
 </footer>
 
-<!-- ── MODAL (unchanged) ── -->
+<!-- ── MODAL ── -->
 <div class="modalOverlay" id="modal" onclick="if(event.target===this)closeProject()">
   <button class="modalNav modalPrev" aria-label="Previous project" onclick="stepProject(-1)">←</button>
   <div class="modalBox">
@@ -685,10 +842,10 @@ async function loadProjects(){
   const grid=document.getElementById('grid');
   try{
     if(SHEET_CSV_URL.indexOf('PASTE_YOUR')===0){
-      grid.innerHTML='<p style="padding:0 4vw;color:#999;font-size:13px">Project data source not connected yet — paste your published Google Sheet CSV link into SHEET_CSV_URL in the code.</p>';
+      grid.innerHTML='<p style="color:#999;font-size:13px">Project data source not connected yet — paste your published Google Sheet CSV link into SHEET_CSV_URL in the code.</p>';
       return;
     }
-    grid.innerHTML='<p style="padding:0 4vw;color:#999;font-size:13px">Loading projects…</p>';
+    grid.innerHTML='<p style="color:#999;font-size:13px">Loading projects…</p>';
     const res=await fetch(SHEET_CSV_URL,{cache:'no-store'});
     if(!res.ok)throw new Error('fetch failed');
     const text=await res.text();
@@ -709,7 +866,7 @@ async function loadProjects(){
       if(work.some(p=>p.num===targetNum))openProject(targetNum);
     }
   }catch(err){
-    grid.innerHTML='<p style="padding:0 4vw;color:#999;font-size:13px">Couldn\'t load the latest projects right now — please check back shortly.</p>';
+    grid.innerHTML='<p style="color:#999;font-size:13px">Couldn\'t load the latest projects right now — please check back shortly.</p>';
     console.error('Project load error:',err);
   }
 }
@@ -727,8 +884,8 @@ function render(){
     const tease=items.length>1?`${items.length} projects — swipe for more`:'1 project';
     out+=`<div class="catGroup">
       <div class="catHead"><span class="catNo">0${n}</span><h3>${cat}</h3><span class="catCount">${tease}</span></div>
-      <div class="catRow">${items.map((p,i)=>`
-        <div class="project p${i%3}" tabindex="0" role="button" aria-label="View ${p.title}" onclick="openProject('${p.num}')" onkeydown="if(event.key==='Enter')openProject('${p.num}')">
+      <div class="catRow">${items.map(p=>`
+        <div class="project" tabindex="0" role="button" aria-label="View ${p.title}" onclick="openProject('${p.num}')" onkeydown="if(event.key==='Enter')openProject('${p.num}')">
           <div class="projectImg"><img src="${p.images[0]}" alt="${p.title} — ${p.category.toLowerCase()} by Studio Akaar, Dhaka, Bangladesh" loading="lazy"><span class="projectNum">${p.num}</span><span class="projectArrow">↗</span>${p.images.length>1?`<span class="photoCount"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="14" height="14" rx="1.5" fill="currentColor" opacity=".55"/><rect x="7" y="3" width="14" height="14" rx="1.5" fill="currentColor"/></svg>+${p.images.length-1}</span>`:''}</div>
           <div class="projectInfo"><span>${p.category}</span><strong>${p.title}</strong></div>
         </div>`).join('')}</div>
@@ -901,7 +1058,6 @@ function submitInquiry(e){
     params.set(GFORM_ENTRIES.projectType+'.other_option_response', document.getElementById('inqOtherText').value.trim());
   }
 
-  const iframe=document.getElementById('hiddenInquiryFrame');
   const tempForm=document.createElement('form');
   tempForm.action=GFORM_ACTION;
   tempForm.method='POST';
