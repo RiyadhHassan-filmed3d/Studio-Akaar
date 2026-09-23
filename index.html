@@ -927,6 +927,7 @@ function render(){
   });
   document.getElementById('grid').innerHTML=out;
   observeProjectImages();
+  setupRowAutoSwipe();
 }
 
 let modalList=[];
@@ -1153,6 +1154,61 @@ function submitInquiry(e){
     e.stopPropagation();
   });
 })();
+
+// ── MOBILE AUTO-SWIPE (project rows) ──
+// When a category row scrolls into view on a phone, wait 2 seconds, then glide to the next project.
+// Touching the row stops it. Change the two numbers below to adjust the timing (in milliseconds).
+const AUTO_START_DELAY=2000;
+const AUTO_STEP_DELAY=2500;
+const mobileMQ=window.matchMedia('(max-width:800px)');
+const reduceMotionMQ=window.matchMedia('(prefers-reduced-motion: reduce)');
+let rowIO=null;
+const rowTimers=new WeakMap();
+
+function stopRowAuto(row){
+  const t=rowTimers.get(row);
+  if(t){clearTimeout(t);rowTimers.delete(row);}
+}
+function rowOrigin(row){
+  return row.getBoundingClientRect().left+(parseFloat(getComputedStyle(row).paddingLeft)||0);
+}
+function scheduleRowAuto(row,delay){
+  stopRowAuto(row);
+  rowTimers.set(row,setTimeout(()=>{
+    if(!mobileMQ.matches)return;
+    const modalOpen=document.getElementById('modal').classList.contains('open')||document.getElementById('inquiryModal').classList.contains('open');
+    if(modalOpen){scheduleRowAuto(row,AUTO_STEP_DELAY);return;}
+    if(row.scrollLeft>=row.scrollWidth-row.clientWidth-2)return;
+    const origin=rowOrigin(row);
+    const next=[...row.querySelectorAll('.project')].find(c=>c.getBoundingClientRect().left>origin+10);
+    if(!next)return;
+    row.scrollBy({left:next.getBoundingClientRect().left-origin,behavior:'smooth'});
+    scheduleRowAuto(row,AUTO_STEP_DELAY);
+  },delay));
+}
+function setupRowAutoSwipe(){
+  if(rowIO)rowIO.disconnect();
+  rowIO=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      const row=e.target;
+      if(e.isIntersecting){
+        if(mobileMQ.matches&&!reduceMotionMQ.matches&&!row.dataset.touched)scheduleRowAuto(row,AUTO_START_DELAY);
+      }else{
+        stopRowAuto(row);
+        if(!row.dataset.touched&&mobileMQ.matches)row.scrollTo({left:0,behavior:'instant'});
+        delete row.dataset.touched;
+      }
+    });
+  },{threshold:0.6});
+  document.querySelectorAll('.catRow').forEach(row=>{
+    if(row.querySelectorAll('.project').length<2)return;
+    const stop=()=>{row.dataset.touched='1';stopRowAuto(row);};
+    row.addEventListener('touchstart',stop,{passive:true});
+    row.addEventListener('pointerdown',stop,{passive:true});
+    row.addEventListener('wheel',stop,{passive:true});
+    rowIO.observe(row);
+  });
+}
 
 // ── INIT ──
 document.getElementById('serviceList').innerHTML=services.map((s,i)=>`<div><span>0${i+1}</span><strong>${s}</strong><b>↗</b></div>`).join('');
