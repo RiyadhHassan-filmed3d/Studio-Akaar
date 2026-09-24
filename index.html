@@ -107,14 +107,10 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .heroText{position:absolute;left:var(--gutter);bottom:14vh;max-width:680px}
 .hero h1{font-size:clamp(64px,9vw,140px);line-height:.84;font-weight:300;letter-spacing:-.06em;margin:0}
 .lead{font-size:16px;line-height:1.7;max-width:510px;margin:35px 0}
-.heroMeta{position:absolute;left:var(--gutter);right:var(--gutter);bottom:28px;display:grid;grid-template-columns:1fr auto 1fr;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em}
-.heroMeta span:nth-child(1){text-align:left}
-.heroMeta span:nth-child(2){text-align:center}
-.heroMeta span:nth-child(3){text-align:right}
+.heroMeta{position:absolute;left:var(--gutter);right:var(--gutter);bottom:28px;display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em}
 
 /* STUDIO / INTRO */
-.intro{padding:var(--sy) var(--gutter);display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:7vw;align-items:center}
-.sectionNo{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#888;align-self:start}
+.intro{padding:var(--sy) var(--gutter);display:grid;grid-template-columns:2.2fr 1fr;gap:7vw;align-items:center}
 .introCopy>p:not(.eyebrow),.serviceIntro>p:not(.eyebrow){font-size:15px;line-height:1.85;color:#555;max-width:520px;margin:0}
 .introImage{height:620px;overflow:hidden}
 .introImage img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:.7s}
@@ -132,7 +128,6 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .catGroup{margin-bottom:110px}
 .catGroup:last-child{margin-bottom:0}
 .catHead{display:flex;align-items:baseline;gap:16px;margin-bottom:40px}
-.catHead .catNo{font-family:'DM Mono',monospace;font-size:9px;color:#999}
 .catHead h3{font-size:clamp(22px,2.6vw,32px);font-weight:300;letter-spacing:-.04em;margin:0}
 .catHead .catCount{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#999;white-space:nowrap}
 /* Strict 3-column grid: every card has the same width, the same top edge and the same image shape */
@@ -141,9 +136,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .project:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
 .projectImg{aspect-ratio:4/5;overflow:hidden;position:relative;background:#ddd}
 .projectImg img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1);transition:filter .55s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
-.projectNum,.projectArrow{position:absolute;top:15px;font-family:'DM Mono',monospace;font-size:9px;color:#fff;text-shadow:0 1px 5px #000}
-.projectNum{left:15px}
-.projectArrow{right:15px;font-size:15px;opacity:0;transform:translate(-5px,5px);transition:.3s}
+.projectArrow{position:absolute;top:15px;right:15px;font-family:'DM Mono',monospace;font-size:15px;color:#fff;text-shadow:0 1px 5px #000;opacity:0;transform:translate(-5px,5px);transition:.3s}
 .photoCount{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.6);color:#fff;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.03em;padding:5px 9px;border-radius:20px;display:flex;align-items:center;gap:5px}
 .projectInfo{padding-top:15px;display:flex;justify-content:space-between;gap:15px;align-items:baseline}
 .projectInfo span{font-family:'DM Mono',monospace;text-transform:uppercase;font-size:8px;letter-spacing:.08em;color:#888}
@@ -196,12 +189,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .journalNote a{text-decoration:underline;color:var(--ink)}
 
 /* SERVICES */
-.services{padding:var(--sy) var(--gutter);display:grid;grid-template-columns:1fr 1.2fr 1.4fr;gap:7vw;align-items:start}
+.services{padding:var(--sy) var(--gutter);display:grid;grid-template-columns:1.2fr 1.4fr;gap:7vw;align-items:start}
 .serviceIntro h2{margin-bottom:30px}
 .serviceList{border-top:1px solid var(--line)}
-.serviceList div{display:grid;grid-template-columns:45px 1fr 30px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);transition:.25s}
+.serviceList div{display:grid;grid-template-columns:1fr 30px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);transition:.25s}
 .serviceList div:hover{padding-left:10px}
-.serviceList span{font-family:'DM Mono',monospace;font-size:9px;color:#999}
 .serviceList strong{font-size:15px;font-weight:400}
 .serviceList b{font-weight:400;text-align:right}
 
@@ -325,10 +317,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .heroImage img{object-position:center center}
   .heroText{bottom:13vh}
   .heroMeta{display:flex;justify-content:space-between}
-  .heroMeta span:nth-child(2){display:none}
 
   .intro,.services{display:block}
-  .intro .sectionNo,.services .sectionNo{margin-bottom:48px}
   .introImage{height:430px;margin-top:60px}
 
   .knowledge{padding-bottom:60px}
@@ -412,13 +402,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   <div class="heroMeta">
     <span>Dhaka, Bangladesh</span>
     <span>Studio Akaar</span>
-    <span>01 — 01</span>
   </div>
 </section>
 
 <!-- ── STUDIO ── -->
 <section class="intro" id="studio">
-  <div class="sectionNo">01 / Studio</div>
   <div class="introCopy">
     <p class="eyebrow">Who we are</p>
     <h2>Solving spatial challenges through <span>clarity.</span></h2>
@@ -593,7 +581,6 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 <!-- ── SERVICES ── -->
 <section class="services" id="services">
-  <div class="sectionNo">02 / Services</div>
   <div class="serviceIntro">
     <p class="eyebrow">What we do</p>
     <h2>From first idea<br>to <span>real space.</span></h2>
@@ -911,17 +898,15 @@ function render(){
   const list=work.filter(x=>active==='All'||x.category===active);
   const cats=active==='All'?filters.slice(1):[active];
   let out='';
-  let n=0;
   cats.forEach(cat=>{
     const items=list.filter(x=>x.category===cat);
     if(!items.length)return;
-    n++;
     const tease=items.length>1?`${items.length} projects — swipe for more`:'1 project';
     out+=`<div class="catGroup">
-      <div class="catHead"><span class="catNo">0${n}</span><h3>${cat}</h3><span class="catCount">${tease}</span></div>
+      <div class="catHead"><h3>${cat}</h3><span class="catCount">${tease}</span></div>
       <div class="catRow">${items.map(p=>`
         <div class="project" tabindex="0" role="button" aria-label="View ${p.title}" onclick="openProject('${p.num}')" onkeydown="if(event.key==='Enter')openProject('${p.num}')">
-          <div class="projectImg"><img src="${p.images[0]}" alt="${p.title} — ${p.category.toLowerCase()} by Studio Akaar, Dhaka, Bangladesh" loading="lazy"><span class="projectNum">${p.num}</span><span class="projectArrow">↗</span>${p.images.length>1?`<span class="photoCount"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="14" height="14" rx="1.5" fill="currentColor" opacity=".55"/><rect x="7" y="3" width="14" height="14" rx="1.5" fill="currentColor"/></svg>+${p.images.length-1}</span>`:''}</div>
+          <div class="projectImg"><img src="${p.images[0]}" alt="${p.title} — ${p.category.toLowerCase()} by Studio Akaar, Dhaka, Bangladesh" loading="lazy"><span class="projectArrow">↗</span>${p.images.length>1?`<span class="photoCount"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="14" height="14" rx="1.5" fill="currentColor" opacity=".55"/><rect x="7" y="3" width="14" height="14" rx="1.5" fill="currentColor"/></svg>+${p.images.length-1}</span>`:''}</div>
           <div class="projectInfo"><span>${p.category}</span><strong>${p.title}</strong></div>
         </div>`).join('')}</div>
     </div>`;
@@ -971,7 +956,7 @@ function showModalProject(){
   if(!p)return;
   document.getElementById('modalImg').src=p.images[modalImgIndex];
   document.getElementById('modalImg').alt=p.title;
-  document.getElementById('modalCat').textContent=p.category+' — '+p.num;
+  document.getElementById('modalCat').textContent=p.category;
   document.getElementById('modalTitle').textContent=p.title;
   document.getElementById('modalDesc').textContent=p.description;
   const metaParts=[];
@@ -1212,7 +1197,7 @@ function setupRowAutoSwipe(){
 }
 
 // ── INIT ──
-document.getElementById('serviceList').innerHTML=services.map((s,i)=>`<div><span>0${i+1}</span><strong>${s}</strong><b>↗</b></div>`).join('');
+document.getElementById('serviceList').innerHTML=services.map(s=>`<div><strong>${s}</strong><b>↗</b></div>`).join('');
 loadProjects();
 
 document.getElementById('menubtn').onclick=()=>document.getElementById('navlinks').classList.toggle('open');
