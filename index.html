@@ -163,6 +163,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .media{border-radius:6px;overflow:hidden;background:#111;align-self:start;width:100%}
 .ratio{position:relative;padding-top:56.25%;background:#000}
 .ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.videoFallback{font-size:11px;color:#999;margin:10px 0 0;text-align:center}
+.videoFallback a{text-decoration:underline;color:#777}
 .factPanel{aspect-ratio:16/9;background:#e9e9e4;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:0 8%;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#555}
 .factPanel div{display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line)}
 .factPanel div:last-child{border-bottom:0;padding-bottom:0}
@@ -492,8 +494,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
       <p>Portfolio walkthroughs, software tutorials, and problem-solution breakdowns — practical insights for clients, students, and collaborators.</p>
       <div class="media">
         <div class="ratio">
-          <iframe src="https://www.youtube.com/embed/videoseries?list=UUZ_WILDGewUrBMpKwfVME-w" title="Studio Akaar on YouTube" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUZ_WILDGewUrBMpKwfVME-w&rel=0&modestbranding=1" title="Studio Akaar on YouTube" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
+        <p class="videoFallback">Player not loading? <a href="https://www.youtube.com/@riyadhfilmed3d" target="_blank" rel="noopener">Watch on YouTube directly ↗</a></p>
       </div>
       <div class="itemFoot">
         <div class="meta">
