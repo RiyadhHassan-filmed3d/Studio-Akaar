@@ -101,7 +101,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 /* HERO */
 .hero{height:100vh;min-height:700px;position:relative;background:#111;color:#fff;overflow:hidden}
-.heroImage{position:absolute;inset:0}
+.heroImage{position:absolute;top:-40px;left:0;right:0;bottom:-40px;will-change:transform}
 .heroImage img{width:100%;height:100%;object-fit:cover;object-position:center 8%;filter:grayscale(1);transform:scale(1.01);transition:filter .7s,transform .9s}
 .heroOverlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.12) 70%),linear-gradient(0deg,rgba(0,0,0,.5),transparent 55%)}
 .heroText{position:absolute;left:var(--gutter);bottom:14vh;max-width:680px}
@@ -301,6 +301,48 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .heroImage.seen img,.introImage.seen img,.founderImage.seen img,.projectImg.seen img{filter:grayscale(0)}
 }
 
+/* ══ DYNAMIC FEATURES ══ */
+
+/* Page fade-in on load — default is fully visible; JS only ever adds this class briefly */
+body{transition:opacity .5s ease}
+body.pre-reveal{opacity:0}
+
+/* Anchor scroll offset so the fixed nav never covers a section's top edge */
+section[id]{scroll-margin-top:78px}
+
+/* Scroll-triggered fade/slide-in. .reveal-d1/d2/d3 add a small stagger delay.
+   .reveal-stagger fades its own children in one after another (used for project rows and the services list). */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal-d1{transition-delay:.12s}
+.reveal-d2{transition-delay:.24s}
+.reveal-stagger>*{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.16,.8,.24,1),transform .7s cubic-bezier(.16,.8,.24,1)}
+.reveal-stagger.in>*{opacity:1;transform:none}
+.reveal-stagger.in>*:nth-child(1){transition-delay:0s}
+.reveal-stagger.in>*:nth-child(2){transition-delay:.08s}
+.reveal-stagger.in>*:nth-child(3){transition-delay:.16s}
+.reveal-stagger.in>*:nth-child(4){transition-delay:.24s}
+.reveal-stagger.in>*:nth-child(5){transition-delay:.32s}
+.reveal-stagger.in>*:nth-child(n+6){transition-delay:.4s}
+
+/* Custom cursor — desktop with a mouse only; a real pointer device never sees this */
+.cursorDot,.cursorRing{position:fixed;top:0;left:0;pointer-events:none;z-index:999;border-radius:50%;transform:translate(-50%,-50%);display:none}
+.cursorDot{width:6px;height:6px;background:var(--ink)}
+.cursorRing{width:34px;height:34px;border:1px solid var(--ink);opacity:.35;transition:width .25s ease,height .25s ease,opacity .25s ease,border-color .25s ease}
+.cursorRing.hover{width:56px;height:56px;opacity:.6;border-color:var(--accent)}
+@media(hover:hover) and (pointer:fine){
+  .cursorDot,.cursorRing{display:block}
+  body,a,button,.project,.radioGrid label{cursor:none}
+  .field input[type=text],.field input[type=tel],.field textarea{cursor:auto}
+}
+
+/* Respect reduced-motion: everything above still lays out correctly, just without the animation */
+@media(prefers-reduced-motion: reduce){
+  .reveal,.reveal-stagger>*{opacity:1!important;transform:none!important;transition:none!important}
+  .cursorDot,.cursorRing{display:none!important}
+  body{transition:none}
+}
+
 /* Tablet: 2 project columns */
 @media(max-width:1100px){
   .catRow{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -309,6 +351,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 /* ── MOBILE ── */
 @media(max-width:800px){
   :root{--gutter:7vw}
+  section[id]{scroll-margin-top:66px}
   .nav{height:66px}
   .brand img{height:32px}
   .navlinks{display:none}
@@ -409,20 +452,20 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 <!-- ── STUDIO ── -->
 <section class="intro" id="studio">
-  <div class="introCopy">
+  <div class="introCopy reveal">
     <p class="eyebrow">Who we are</p>
     <h2>Solving spatial challenges through <span>clarity.</span></h2>
     <p>Studio Akaar is an architectural studio focused on solving spatial challenges through functional clarity and systematic design thinking. We combine contemporary strategies with the discipline and wisdom embedded in architectural tradition.</p>
     <a class="textLink" href="#contact">Start a conversation <span>→</span></a>
   </div>
-  <div class="introImage">
+  <div class="introImage reveal reveal-d1">
     <img src="images/img-003.jpg" alt="Modern residential building designed by Studio Akaar, an architecture firm in Dhaka, Bangladesh" loading="lazy">
   </div>
 </section>
 
 <!-- ── WORK ── -->
 <section class="work" id="work">
-  <div class="workHead">
+  <div class="workHead reveal">
     <div>
       <p class="eyebrow">Selected work</p>
       <h2>Projects with <span>purpose.</span></h2>
@@ -464,13 +507,13 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 <!-- ── STATEMENT ── -->
 <section class="statement">
   <div class="statementMark">"</div>
-  <p>Architecture is not only about visual expression — it is about performance, functionality, and the way people experience space daily.</p>
-  <span>— Studio Akaar</span>
+  <p class="reveal">Architecture is not only about visual expression — it is about performance, functionality, and the way people experience space daily.</p>
+  <span class="reveal reveal-d1">— Studio Akaar</span>
 </section>
 
 <!-- ── KNOWLEDGE ── -->
 <section class="knowledge" id="knowledge">
-  <div class="knowledgeHead">
+  <div class="knowledgeHead reveal">
     <div>
       <p class="eyebrow">Design knowledge</p>
       <h2>Process,<br><span>explained.</span></h2>
@@ -488,7 +531,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
   <div class="knowledgeGrid">
     <!-- Item 1: YouTube -->
-    <div class="knowledgeItem">
+    <div class="knowledgeItem reveal">
       <span class="label">Video series</span>
       <h3>Design deep-dives</h3>
       <p>Portfolio walkthroughs, software tutorials, and problem-solution breakdowns — practical insights for clients, students, and collaborators.</p>
@@ -508,7 +551,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     </div>
 
     <!-- Item 2: Climate & context -->
-    <div class="knowledgeItem">
+    <div class="knowledgeItem reveal reveal-d1">
       <span class="label">Design approach</span>
       <h3>Climate + context</h3>
       <p>Bangladesh's tropical climate demands thoughtful design. We analyze solar paths, wind patterns, rainfall, and cultural context to create spaces that perform as beautifully as they look.</p>
@@ -529,7 +572,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 <!-- ── PROJECT JOURNAL ── -->
 <section class="journal" id="journal">
-  <div class="journalHead">
+  <div class="journalHead reveal">
     <div>
       <p class="eyebrow">Project journal</p>
       <h2>From concept<br><span>to completion.</span></h2>
@@ -541,7 +584,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
   <div class="journalGrid">
     <!-- Card 1: Facebook feed -->
-    <div class="journalCard">
+    <div class="journalCard reveal">
       <div class="fbEmbed">
         <div class="fb-page"
              data-href="https://www.facebook.com/AkaarStudio"
@@ -564,7 +607,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     </div>
 
     <!-- Card 2: Process & values summary -->
-    <div class="journalCard story">
+    <div class="journalCard story reveal reveal-d1">
       <span class="label">Why we document</span>
       <h3 class="storyTitle">Every project<br>tells a <span>story.</span></h3>
       <p>We believe in transparency and shared learning. Our journal is a record of how we navigate site constraints, client aspirations, and the pursuit of design excellence — one decision at a time.</p>
@@ -584,12 +627,12 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 <!-- ── SERVICES ── -->
 <section class="services" id="services">
-  <div class="serviceIntro">
+  <div class="serviceIntro reveal">
     <p class="eyebrow">What we do</p>
     <h2>From first idea<br>to <span>real space.</span></h2>
     <p>We stay with a project end to end — from hand-drawn concept and CAD documentation, through 3D modeling, rendering and BOQ preparation, to on-site construction supervision and handover.</p>
   </div>
-  <div class="serviceList" id="serviceList"></div>
+  <div class="serviceList reveal-stagger" id="serviceList"></div>
   <noscript>
     <ul>
       <li>Architecture</li>
@@ -606,10 +649,10 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 <!-- ── TEAM TEASER ── -->
 <section class="founder">
-  <div class="founderImage">
+  <div class="founderImage reveal">
     <img src="images/img-004.jpg" alt="M. Riyadh Hassan, founder and architect at Studio Akaar, Dhaka, Bangladesh" loading="lazy">
   </div>
-  <div class="founderCopy">
+  <div class="founderCopy reveal reveal-d1">
     <p class="eyebrow">Founder / Architect</p>
     <h2>M. Riyadh<br><span>Hassan</span></h2>
     <p>Architect · Interior Designer · Landscape Designer</p>
@@ -621,14 +664,14 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 <!-- ── FOOTER ── -->
 <footer id="contact">
   <div class="footerTop">
-    <div>
+    <div class="reveal">
       <p class="eyebrow">Have a project in mind?</p>
       <h2>Let's make<br><span>space work.</span></h2>
       <div class="formCta">
         <button class="textLink" type="button" onclick="openInquiry()">Open project inquiry form <span>→</span></button>
       </div>
     </div>
-    <a class="bigMail" href="mailto:info@thestudioakaar.com">info@thestudioakaar.com <span>↗</span></a>
+    <a class="bigMail reveal reveal-d1" href="mailto:info@thestudioakaar.com">info@thestudioakaar.com <span>↗</span></a>
   </div>
 
   <div class="tradeStrip">
@@ -906,8 +949,8 @@ function render(){
     if(!items.length)return;
     const tease=items.length>1?`${items.length} projects — swipe for more`:'1 project';
     out+=`<div class="catGroup">
-      <div class="catHead"><h3>${cat}</h3><span class="catCount">${tease}</span></div>
-      <div class="catRow">${items.map(p=>`
+      <div class="catHead reveal"><h3>${cat}</h3><span class="catCount">${tease}</span></div>
+      <div class="catRow reveal-stagger">${items.map(p=>`
         <div class="project" tabindex="0" role="button" aria-label="View ${p.title}" onclick="openProject('${p.num}')" onkeydown="if(event.key==='Enter')openProject('${p.num}')">
           <div class="projectImg"><img src="${p.images[0]}" alt="${p.title} — ${p.category.toLowerCase()} by Studio Akaar, Dhaka, Bangladesh" loading="lazy"><span class="projectArrow">↗</span>${p.images.length>1?`<span class="photoCount"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="14" height="14" rx="1.5" fill="currentColor" opacity=".55"/><rect x="7" y="3" width="14" height="14" rx="1.5" fill="currentColor"/></svg>+${p.images.length-1}</span>`:''}</div>
           <div class="projectInfo"><span>${p.category}</span><strong>${p.title}</strong></div>
@@ -917,6 +960,7 @@ function render(){
   document.getElementById('grid').innerHTML=out;
   observeProjectImages();
   setupRowAutoSwipe();
+  observeReveals();
 }
 
 let modalList=[];
@@ -1199,12 +1243,118 @@ function setupRowAutoSwipe(){
   });
 }
 
+// ── SCROLL REVEAL (fade/slide-in on scroll) ──
+// Elements with class "reveal" fade up once when they enter the viewport; .reveal-stagger
+// does the same to its own children, one after another. Runs once per element, then stops watching it.
+let revealIO=null;
+function initScrollReveal(){
+  if(reduceMotionMQ.matches){
+    document.querySelectorAll('.reveal,.reveal-stagger').forEach(el=>el.classList.add('in'));
+    return;
+  }
+  revealIO=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');revealIO.unobserve(e.target);}
+    });
+  },{threshold:0.15,rootMargin:'0px 0px -8% 0px'});
+  observeReveals();
+}
+function observeReveals(){
+  if(!revealIO)return;
+  document.querySelectorAll('.reveal:not(.in),.reveal-stagger:not(.in)').forEach(el=>revealIO.observe(el));
+}
+
+// ── HERO PARALLAX ──
+// The hero photo drifts a little slower than the page as you scroll past it — a common depth cue.
+// Only the wrapping div moves, so the photo's own hover zoom (in the CSS) is untouched.
+function initHeroParallax(){
+  if(reduceMotionMQ.matches)return;
+  const wrap=document.querySelector('.heroImage');
+  const hero=document.querySelector('.hero');
+  if(!wrap||!hero)return;
+  let ticking=false;
+  function update(){
+    const r=hero.getBoundingClientRect();
+    if(r.bottom>0&&r.top<window.innerHeight){
+      const progress=Math.min(1,Math.max(0,-r.top/Math.max(1,r.height)));
+      wrap.style.transform=`translateY(${progress*24}px)`;
+    }
+    ticking=false;
+  }
+  window.addEventListener('scroll',()=>{
+    if(!ticking){requestAnimationFrame(update);ticking=true;}
+  },{passive:true});
+  update();
+}
+
+// ── CUSTOM CURSOR ──
+// Desktop with a real mouse only (hover:hover/pointer:fine) — a phone or tablet never sees this.
+function initCustomCursor(){
+  if(reduceMotionMQ.matches)return;
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  const dot=document.createElement('div');dot.className='cursorDot';
+  const ring=document.createElement('div');ring.className='cursorRing';
+  document.body.append(dot,ring);
+  let mx=-100,my=-100,rx=-100,ry=-100;
+  window.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;
+  });
+  (function loop(){
+    rx+=(mx-rx)*0.18;
+    ry+=(my-ry)*0.18;
+    ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  })();
+  const HOVER_TARGETS='a,button,.project,input,textarea,.chip';
+  document.addEventListener('mouseover',e=>{if(e.target.closest(HOVER_TARGETS))ring.classList.add('hover');});
+  document.addEventListener('mouseout',e=>{
+    const el=e.target.closest(HOVER_TARGETS);
+    if(el&&(!e.relatedTarget||!el.contains(e.relatedTarget)))ring.classList.remove('hover');
+  });
+}
+
+// ── MAGNETIC BUTTONS ──
+// Links and buttons pull gently toward the cursor when it's nearby, and spring back on mouse-out.
+// Delegated on document so it still works after the project grid re-renders.
+function initMagnetic(){
+  if(reduceMotionMQ.matches)return;
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  const MAGNETIC='.arrowLink,.textLink,.formSubmit,.waFloat,.filters button,.navlinks a';
+  document.addEventListener('mousemove',e=>{
+    const el=e.target.closest(MAGNETIC);
+    if(!el)return;
+    const r=el.getBoundingClientRect();
+    const relX=e.clientX-(r.left+r.width/2);
+    const relY=e.clientY-(r.top+r.height/2);
+    const tx=Math.max(-10,Math.min(10,relX*0.28));
+    const ty=Math.max(-10,Math.min(10,relY*0.28));
+    el.style.transition='transform 0s';
+    el.style.transform=`translate(${tx}px,${ty}px)`;
+  });
+  document.addEventListener('mouseout',e=>{
+    const el=e.target.closest(MAGNETIC);
+    if(!el||(e.relatedTarget&&el.contains(e.relatedTarget)))return;
+    el.style.transition='transform .35s cubic-bezier(.2,.8,.2,1)';
+    el.style.transform='translate(0,0)';
+  });
+}
+
 // ── INIT ──
 document.getElementById('serviceList').innerHTML=services.map(s=>`<div><strong>${s}</strong><b>↗</b></div>`).join('');
 loadProjects();
 
 document.getElementById('menubtn').onclick=()=>document.getElementById('navlinks').classList.toggle('open');
 document.querySelectorAll('.navlinks a').forEach(a=>a.onclick=()=>document.getElementById('navlinks').classList.remove('open'));
+
+initScrollReveal();
+initHeroParallax();
+initCustomCursor();
+initMagnetic();
+
+// Brief fade-in on first load. Default (no class) is fully visible, so nothing breaks if this never runs.
+document.body.classList.add('pre-reveal');
+requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('pre-reveal')));
 
 // ── SCROLL REVEAL ──
 function setupScrollReveal(){
