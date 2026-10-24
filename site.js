@@ -23,7 +23,8 @@ document.addEventListener('click',e=>{
   else if(h.startsWith('mailto:'))track('email_click',{page:pg});
   else if(h.startsWith('tel:'))track('phone_click',{page:pg});
   else if(/calendar\.app\.google/.test(h))track('booking_click',{page:pg});
-  else if(a.id==='latest')track('album_click',{project:(document.getElementById('latestName')||{}).textContent});
+  else if(a.classList.contains('bcard'))track('blog_card_click',{post:h.split('/blog/')[1]||''});
+ else if(a.id==='latest')track('album_click',{project:(document.getElementById('latestName')||{}).textContent});
   else if(a.classList.contains('card'))track('project_card_click',{project:h.split('/projects/')[1]||h.split('#')[1]||''});
 },true);
 
@@ -54,7 +55,7 @@ async function sheetRows(tab){
 
 // ── SHARED SITE SCRIPT: loader, fixed menu, scroll indicator, footer, project data ──
 const SHEET_CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vQYK9l0JYTYe3pNpxRSdS7hWHu5h_vSF2OuDe7qwnUFd4SBv6ufXQp7YT99265m6Uovg5qpEleGOrlY/pub?output=csv';
-const PAGES=[['Home','/'],['Projects','/projects'],['Team','/team'],['Films','/youtube'],['About Us','/about'],['Contact Us','/contact']];
+const PAGES=[['Home','/'],['Projects','/projects'],['Team','/team'],['Films','/youtube'],['Blog','/blog'],['About Us','/about'],['Contact Us','/contact']];
 
 (function(){
   // Opening animation: A K A A R, shown once per visit, hidden as soon as the page is ready (max 3s)
@@ -158,7 +159,7 @@ const PAGES=[['Home','/'],['Projects','/projects'],['Team','/team'],['Films','/y
     raf=0;if(!scrolled)return;
     const vw=innerWidth,vh=innerHeight;
     document.querySelectorAll(T).forEach(el=>{
-      const imgs=el.classList.contains('hero')?[el.querySelector(':scope>img')]:[...el.querySelectorAll('img')];
+      const imgs=el.classList.contains('hero')?[...el.querySelectorAll(':scope>img')]:[...el.querySelectorAll('img')];
       if(!imgs[0])return;
       const r=(el.classList.contains('card')?el.querySelector('.ph'):el).getBoundingClientRect();
       const dy=Math.abs(r.top+r.height/2-vh/2)/(vh*.45);   // 0 = centred vertically

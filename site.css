@@ -201,8 +201,8 @@ footer .cp{grid-column:1/-1;text-align:right;font-family:'DM Mono',monospace;fon
 .tm .hero>img,.tm .introImg img,.tm .card .ph img,.tm .founderPic img{transition:filter .12s linear}
 /* Desktop: gentle snapping between page segments */
 @media(hover:hover) and (pointer:fine){
-  html{scroll-snap-type:y proximity;scroll-padding-top:68px}
-  section,footer,.pageHead{scroll-snap-align:start}
+  html{scroll-padding-top:68px}
+  
 }
 
 /* Team page */
@@ -252,3 +252,28 @@ a.introImg img.on{opacity:1;transform:scale(1.04)}
 .allp a{display:block;font-size:13px;margin:0 0 8px;color:#555}
 .allp a:hover{color:var(--ink)}
 @media(max-width:800px){.svcDetail{display:block}.sd{grid-template-columns:1fr;margin-top:40px}.gal{grid-template-columns:1fr}}
+
+/* ── Bigger "Who we are" / "What we do" headings ── */
+.intro h2.big,.services h2.big{font-size:clamp(42px,5.4vw,76px)}
+
+/* ── Hero slideshow (newest projects cross-fade and drift slowly) ── */
+.hero>img.hs{opacity:0;transform:scale(1);transition:opacity 1.6s ease,transform 14s linear,filter .7s}
+.hero>img.hs.on{opacity:1;transform:scale(1.1)}
+.tm .hero>img.hs{transition:opacity 1.6s ease,transform 14s linear,filter .12s linear}
+.heroMeta a{border-bottom:1px solid currentColor}
+
+/* ── Blog: cards (home + /blog) and article page ── */
+.bcard .ph{aspect-ratio:3/2}
+.bcard h3{font-size:20px;line-height:1.25}
+.blogList{row-gap:56px}
+.blogCover{padding:0 var(--gutter) 10px}
+.blogCover .gi img{max-height:680px;object-fit:cover}
+.post{padding:30px var(--gutter) 40px}
+.post>*{max-width:720px}
+.post p{font-size:16px;line-height:1.9;color:#444;margin:0 0 22px}
+.post h2{font-size:clamp(26px,3vw,36px);font-weight:300;letter-spacing:-.03em;line-height:1.1;margin:56px 0 18px}
+.post h3{font-size:20px;font-weight:400;margin:40px 0 12px}
+.post ul{font-size:16px;line-height:1.9;color:#444;margin:0 0 22px;padding-left:20px}
+.post a{text-decoration:underline}
+.post figure.pf{max-width:980px;margin:40px 0}
+.post figcaption{font-size:12px;color:#888;padding-top:10px}

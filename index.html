@@ -72,6 +72,15 @@
   <div class="moreRow"><a class="btn" href="/projects">View full portfolio →</a></div>
 </section>
 
+<!-- LATEST BLOGS (filled from the Blogs tab of the sheet; hidden until there is at least one post) -->
+<section id="journal" style="border-top:1px solid var(--line);display:none">
+ <div class="secHead reveal">
+ <div><p class="eyebrow">Blog</p><h2 class="big">Notes from the <span>studio.</span></h2></div>
+ <a class="textLink" href="/blog" style="margin:0">All articles <span>→</span></a>
+ </div>
+ <div class="hl" id="blogHl"></div>
+</section>
+
 <!-- WHAT WE DO -->
 <section class="services" id="services">
   <div class="reveal">
@@ -109,7 +118,23 @@
 // Which project to feature in each highlight slot (matches the "category" column in your sheet)
 const HIGHLIGHTS=['Residential Building','Commercial Interior','Residential Interior'];
 
+function heroSlides(work){
+ const hero=document.getElementById('top'),base=hero.querySelector(':scope>img'),cap=hero.querySelector('.heroMeta span:last-child'),ov=hero.querySelector('.heroOverlay');
+ const picks=work.slice(-5).reverse();
+ if(!base||!cap||!picks.length||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ base.classList.add('hs','on');
+ const S=[{el:base,t:'Studio Akaar',h:'/'}];
+ picks.forEach(p=>{const im=new Image();im.className='hs';im.alt=p.title+' — project by Studio Akaar';im.dataset.src=p.images[0];hero.insertBefore(im,ov);S.push({el:im,t:p.title,h:'/projects/'+p.slug})});
+ let cur=0,timer=0;
+ const load=i=>{const im=S[i%S.length].el;if(!im.getAttribute('src'))im.src=im.dataset.src};
+ const show=i=>{cur=i%S.length;load(cur);load(cur+1);S.forEach((s,k)=>s.el.classList.toggle('on',k===cur));cap.innerHTML=cur?'<a href="'+S[cur].h+'">'+esc(S[cur].t)+'</a>':'Studio Akaar'};
+ const stop=()=>{clearInterval(timer);timer=0},play=()=>{stop();timer=setInterval(()=>show(cur+1),6500)};
+ load(1);
+ new IntersectionObserver(es=>es[0].isIntersecting?play():stop(),{threshold:.2}).observe(hero);
+ document.addEventListener('visibilitychange',()=>document.hidden?stop():play());
+}
 loadProjects().then(work=>{
+ heroSlides(work);
   // ALBUM: cycles through your newest projects (highest Order numbers first), one by one.
   const ALBUM_SIZE=6, ALBUM_SECONDS=4.5;   // how many projects, and seconds per photo
   const recent=work.slice(-ALBUM_SIZE).reverse();
@@ -148,7 +173,7 @@ loadProjects().then(work=>{
   // Highlight cards
   const picks=HIGHLIGHTS.map(c=>work.find(p=>p.category.toLowerCase()===c.toLowerCase())).filter(Boolean);
   const feat=work.filter(p=>p.featured).slice(0,3);   // projects marked Featured = Yes in the sheet
-  const list=feat.length?feat:(picks.length?picks:work.slice(0,3));
+  const list=[...feat,...work.slice(-3).reverse().filter(p=>!feat.includes(p))].slice(0,3); // featured first, then filled up with the newest so there are always 3
   document.getElementById('hl').innerHTML=list.map(p=>`
     <a class="card reveal" href="/projects/${p.slug}">
       <div class="ph"><img src="${p.images[0]}" alt="${esc(p.title)} — ${esc(p.category)} by Studio Akaar" loading="lazy"></div>
@@ -161,6 +186,22 @@ loadProjects().then(work=>{
 }).catch(()=>{
   document.getElementById('hl').innerHTML='<p style="color:#999;font-size:13px">Couldn\'t load projects right now — <a href="/projects" style="text-decoration:underline">view the portfolio</a>.</p>';
 });
+</script>
+<script>
+// Home page blog cards: posts marked Featured = Yes first, then the newest (3 in total)
+fetch('/api/blog?json=1&n=3').then(r=>r.ok?r.json():Promise.reject()).then(list=>{
+ if(!list.length)return;
+ document.getElementById('blogHl').innerHTML=list.map(p=>`
+ <a class="card bcard reveal" href="/blog/${esc(p.slug)}">
+ <div class="ph">${p.cover?`<img src="${esc(p.cover)}" alt="${esc(p.title)}" loading="lazy">`:`<div class="ini">${esc(p.title.charAt(0))}</div>`}</div>
+ <span class="label tag">${esc(p.category)}</span>
+ <h3>${esc(p.title)}</h3>
+ <p class="meta">${esc([p.date,p.mins+' min read'].filter(Boolean).join(' · '))}</p>
+ <p class="d">${esc(p.summary)}</p>
+ </a>`).join('');
+ document.getElementById('journal').style.display='';
+ observeReveals();
+}).catch(()=>{});
 </script>
 </body>
 </html>
